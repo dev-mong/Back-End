@@ -25,10 +25,10 @@ public class NowServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		out.println("<html>");
 		out.println("\t<head>");
-		out.println("\t\t<title>서블릿 테스트</title>");
+		out.println("\t\t<title>Servlet Test</title>");
 		out.println("\t<head>");
 		out.println("\t<body>");
-		out.println("\t\t<h1>안녕하세요 서블릿 클래스로 응답 처리 된 페이지 입니다.</h1>");
+		out.println("\t\t<h1>안녕하세요 Servlet 클래스로 응답 처리 된 페이지 입니다.</h1>");
 		out.println("\t\t<p>현재 시간은 : + "+new Date()+"</p>");
 		out.println("\t</body>");
 		out.println("</html>");
