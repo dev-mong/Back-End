@@ -36,16 +36,12 @@
  <%@ include file="include/shopping.jsp"%>
 </div>	
 
- <jsp:include page="include/footer.jsp">
+<jsp:include page="include/footer.jsp">
 
 	<jsp:param name="email" value="cool@"/> 
 	<jsp:param name="tel" value="070-9999-9999"/>
 	
 </jsp:include> 
-
-
-
-
 
 	
 </body>
