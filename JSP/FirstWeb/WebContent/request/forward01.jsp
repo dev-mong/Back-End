@@ -3,7 +3,6 @@
 <%
 	String name=(String) request.getAttribute("username");
 %>    
-    
 <!DOCTYPE html>
 <html>
 <head>
