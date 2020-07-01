@@ -24,5 +24,12 @@
 	<h3>
 	현재 접속 중인 사용자의 이름 : <%= userName %>
 	</h3>
+	
+	<%
+		session.setAttribute("uesrname","KING");
+	%>
+	<br>
+	<a href="session/sessionView01.jsp">sessionView</a>
+	
 </body>
 </html>

@@ -14,6 +14,7 @@
 	<h1>session의 속성으로 저장한 데이터 <br>
 		username: <%= userName %><br>
 		<a href="../index.jsp">다른페이지02</a>
+		<a href="logout.jsp">로그아웃</a>
 	</h1>
 </body>
 </html>
