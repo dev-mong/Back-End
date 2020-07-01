@@ -65,6 +65,6 @@
 		
 	</table> --%>
 	
-	<jsp:forward page="forward02.jsp"></jsp:forward>
+	<jsp:forward page="forward02.jsp"/>
 </body>
 </html>
