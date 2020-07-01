@@ -1,20 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%
-	request.setCharacterEncoding("utf-8");
-%>    
+
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사용자 요청 정보 출력 </title>
+<title>Insert title here</title>
 </head>
 <body>
-	<h1>전송 결과</h1>
-	<hr>
-<%-- 	<table border="1">
+	<table border="1">
 		<tr>
 			<td>이름</td>
 			<td><%= request.getParameter("username") %></td>
@@ -32,7 +27,7 @@
 					out.println(likes[i]+"<br>"); // java<br>
 				}
 			%>
-			<%= request.getParameter("like") %>
+			<%-- <%= request.getParameter("like") %> --%>
 			
 			</td>
 		</tr>
@@ -63,8 +58,7 @@
 			</td>
 		</tr>
 		
-	</table> --%>
+	</table>
 	
-	<jsp:forward page="forward02.jsp"></jsp:forward>
 </body>
 </html>
