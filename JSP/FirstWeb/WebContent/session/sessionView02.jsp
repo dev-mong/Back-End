@@ -17,4 +17,4 @@
 		<a href="logout.jsp">로그아웃</a>
 	</h1>
 </body>
-</html>
+</html>	
