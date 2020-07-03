@@ -16,9 +16,10 @@
 	if(uid.equals(pw)){
 		//3.로그인 처리 : 세션 속성에 사용자 정보를 저장
 		/* session.setAttribute("memberId", uid); */
-		session.setAttribute("memberInfo", new MemberInfo(uid,pw)); //객체 생성
-		
-		
+	
+		//session에객체 저장
+		session.setAttribute("memberInfo", new MemberInfo(uid,pw)); 
+
 		loginChk=true;
 	}
 	

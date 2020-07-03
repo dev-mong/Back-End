@@ -4,8 +4,9 @@
     pageEncoding="UTF-8"%>
 <%
 	/* String mId= (String) session.getAttribute("memberId"); */
-
-	MemberInfo memberInfo = (MemberInfo) session.getAttribute("memeberInfo");
+	
+	MemberInfo memberInfo = (MemberInfo) session.getAttribute("memberInfo");
+	
 
 	/* if(mId==null){ */
 		
@@ -19,9 +20,10 @@
 			location.href="sessionLoginForm.jsp"; //url 경로 변경
 		</script>
 		<%
-		
-	}
-%>
+		}
+%> 
+
+
 <!DOCTYPE html>
 <html>
 <head>

@@ -12,8 +12,8 @@
 </head>
 <body>
 	<h1>로그아웃 되었습니다.</h1>
-	<a href="mypage.jsp">My Page</a>
-	<a href="logout.jsp">Logout</a>
+	<a href="sessionLoginForm.jsp">Home</a>
+
 	
 </body>
 </html>
