@@ -6,14 +6,15 @@
 	MemberInfo memberInfo=(MemberInfo) session.getAttribute("member");
 	
 	//session에 저장된 memeber 객체가 없을 때 -> 로그인 페이지로 이동
-	if(memberInfo ==null){
+	if(memberInfo ==null){ 
 %>
 	<script>
 		alert("로그인 후 이용해주세요");
 		location.href="../loginForm.jsp"
-	</script>
+	</script> 
 <% 
-	} else{
+	} 
+	else if(memberInfo !=null){
 %>   
     
 <!DOCTYPE html>
@@ -25,7 +26,7 @@
 </head>
 <body>
 
-	<%@ include file="/include/header.jsp" %>
+	 <%@ include file="/include/header.jsp" %> 
 	<h1>전송 결과</h1>
 	
 	<table border="1">
@@ -48,10 +49,8 @@
 	</table>
 	<br>
 	
-	<a href="../logout.jsp">로그아웃</a>
 	
-	
-	<%@ include file="/include/footer.jsp" %>
+	 <%@ include file="/include/footer.jsp" %> 
 
 
 </body>
