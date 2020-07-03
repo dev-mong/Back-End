@@ -1,11 +1,23 @@
 <%@ page import="studyutil.CookieBox" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	CookieBox cookieBox =new CookieBox(request);
-%>
 
+ <%
+ 	String id=request.getParameter("id");
+	String pw=request.getParameter("pw");
+	String chk=request.getParameter("chk");
+	
+	String cookieName=id; //cookieValue  
+	String cookiePath=request.getContextPath();
+	
+	if(chk !=null){
+		response.addCookie(CookieBox.createCookie("id", cookieName, cookiePath,60*60*24*365));
 
+	}else{
+		//cookie 삭제
+		response.addCookie(CookieBox.createCookie("id", id, request.getContextPath(),0));
+	}
+ %>
 
 <!DOCTYPE html>
 <html>
@@ -23,31 +35,31 @@
 
 	<tr>
 	<td>아이디</td>
-	<td><%= request.getParameter("id") %></td>
+	<td><%= id %></td>
 	</tr>
 	<tr>
 	<td>비밀번호</td>
-	<td><%= request.getParameter("pw") %></td>
+	<td><%= pw %></td>
 	</tr>
 	<tr>
-	<td>비밀번호</td>
-	<td><%= request.getParameter("chk") %></td>
+	<td>로그인 저장 여부</td>
+	<td>
+	<% 
+		if(chk!=null){
+			out.println("아이디를 저장합니다.");	
+		}else{
+			out.println("아이디를 저장하지 않습니다.");
+		}
+	 %>
+	 </td>
 	</tr>
 
 	</table>
+	<br>
 	
-	 <%
-	 	String id=request.getParameter("id");
-		String pw=request.getParameter("pw");
-		String chk=request.getParameter("chk");
-		
-		response.addCookie(CookieBox.createCookie("id", id));
-		response.addCookie(CookieBox.createCookie("pw", pw));
-		response.addCookie(CookieBox.createCookie("chk", chk));
-	 %>
-	 
-	<a href="logindel.jsp">정보 삭제하기</a>
-	<a href="loginedit.jsp">정보 수정하기</a>
+	<a href="cookie/loginview.jsp">로그인 정보 확인하기</a>
+	<a href="cookie/logineidt.jsp">로그인 정보 수정하기</a>
+	<a href="cookie/logindel.jsp">로그인 정보 삭제하기</a>
 	
 	<%@ include file="/include/footer.jsp" %>
 
