@@ -18,7 +18,7 @@
 		<h1>로그인</h1>
 	</div>
 	
-  <form action="cookie/login.jsp" method="post" id="loginForm">
+  <form action="login.jsp" method="post" id="loginForm">
         <table id="table">
             <tr>
                 <td>아이디(이메일)</td>
@@ -29,9 +29,13 @@
                 <td><input type="password" name="pw"></td>
             </tr>
             <tr>
+            	<td></td>
+            	<td><input type="checkbox" name="chk" value="check">아이디 저장</td>
+            </tr>
+            
+            <tr>
                 <td></td>
                 <td> <input id="btn_submit" type="submit" value="로그인">
-                	<input type="checkbox" name="chk" value="check">아이디 저장
                 </td>
             </tr>
 
