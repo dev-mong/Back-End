@@ -1,7 +1,10 @@
+<%@page import="member.MemberInfo"%>
 <%@page import="studyutil.CookieBox"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%
+	/* 쿠키 */
 	CookieBox cookieBox = new CookieBox(request);
 	String cookieId = cookieBox.getValue("id");
 	
@@ -13,7 +16,15 @@
 		checked="checked";
 	}
 	
+	/* session */
+	/*  MemberInfo memberInfo= (MemberInfo) request.getAttribute("member");
+	
+	if(memberInfo==null){
+		
+	} */
 %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +46,8 @@
         <table id="table">
             <tr>
                 <td>아이디(이메일)</td>
-                <td><input type="text" name="id" value=<%= idValue %>></td>
+                <td><input type="text" name="id" value=<%= idValue %>></td> 
+             
             </tr>
             <tr>
                 <td>비밀번호</td>
