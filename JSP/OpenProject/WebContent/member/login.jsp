@@ -9,18 +9,11 @@
 	String pw=request.getParameter("pw");
 	String chk=request.getParameter("chk");
 
+	String url=request.getParameter("referer");
 	
 	String cookieName=id; //cookieValue  
 	String cookiePath=request.getContextPath();
 	
-	if(chk !=null){
-		response.addCookie(CookieBox.createCookie("id", cookieName, cookiePath,60*60*24*365));
-
-	}else{
-		//cookie 삭제
-		response.addCookie(CookieBox.createCookie("id", id, request.getContextPath(),0));
-	}
-
 	
 	 //로그인 아이디 비밀번호 체크
 	 boolean loginCheck=false;
@@ -36,7 +29,17 @@
 <% 
 	//로그인 성공 시 마이페이지로 이동
 	if (loginCheck){ 
-	response.sendRedirect("mypage/mypage.jsp");
+		
+	if(chk !=null){
+		response.addCookie(CookieBox.createCookie("id", cookieName, cookiePath,60*60*24*365));
+
+	}else{
+		//cookie 삭제
+		response.addCookie(CookieBox.createCookie("id", id, request.getContextPath(),0));
+	}
+
+	/* response.sendRedirect(url);	 */
+	 response.sendRedirect("mypage/mypage.jsp"); 
 %>
 <%
 	}else{
