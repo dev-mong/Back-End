@@ -37,6 +37,8 @@
 	</div>
 	
   <form action="login.jsp" method="post" id="loginForm">
+  
+  	<input type="text" name="redirectUri" value="<%= request.getHeader("referer") %>">
         <table id="table">
             <tr>
                 <td>아이디(이메일)</td>
