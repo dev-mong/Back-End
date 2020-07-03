@@ -16,12 +16,6 @@
 		checked="checked";
 	}
 	
-	/* session */
-	/*  MemberInfo memberInfo= (MemberInfo) request.getAttribute("member");
-	
-	if(memberInfo==null){
-		
-	} */
 %>
 
 
