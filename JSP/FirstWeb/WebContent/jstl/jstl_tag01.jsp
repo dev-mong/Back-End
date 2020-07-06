@@ -49,6 +49,22 @@
  	</h3>
  	</c:forEach>
  	
+ 	<h1>
+ 		<c:url value="jstl_tag02.jsp">
+			url2:<c:param name="year" value="1999"></c:param>
+		</c:url>
+	</h1>
+	<br>
+		
+		url3 : <c:url value="jstl_tag02.jsp?year=1999"/>
+		
+	<br>
+	
+		<c:url value="jstl_tag02.jsp?year=1999" var="reurl"/>
+		url4 : ${reurl}
+	</h1>
+	
+	<c:redirect url="${reurl}" />
 	
 </body>
 </html>
