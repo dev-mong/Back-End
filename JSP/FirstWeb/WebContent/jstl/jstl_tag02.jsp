@@ -22,9 +22,7 @@
 	<h1>
 		url : <c:url value="/index.jsp" /><br>
 		<a href="<c:url value="/index.jsp" />">홈</a>
-		
 	</h1>
-	
 	
 </body>
 </html>
