@@ -7,3 +7,7 @@ create table guestbook_message (
 );
 
 create sequence message_id_seq increment by 1 start with 1; 
+
+insert into guestbook_message values (message_id_seq.nextVal,'test','1111','테스트중입니다.');
+
+SELECT * FROM guestbook_message;
