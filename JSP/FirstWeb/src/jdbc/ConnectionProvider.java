@@ -11,12 +11,16 @@ public class ConnectionProvider {
 	
 	public static Connection getConnection() throws SQLException {
 	
-		//DB Connection 정보 
-		String dbUrl="jdbc:oracle:thin:@localhost:1522:orcl";
-		String user="scott";
-		String pw="tiger";
+		String jdbcUrl="jdbc:apache:commoms:dbcp:pool";
 		
-		return DriverManager.getConnection(dbUrl,user,pw);
+		//DB Connection 정보 
+		//String dbUrl="jdbc:oracle:thin:@localhost:1522:orcl";
+		//String user="scott";
+		//String pw="tiger";
+		
+		//return DriverManager.getConnection(dbUrl,user,pw);
+	
+		return DriverManager.getConnection(jdbcUrl);
 	}
 	
 	

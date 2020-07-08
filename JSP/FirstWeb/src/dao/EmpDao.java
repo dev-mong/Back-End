@@ -37,7 +37,7 @@ public class EmpDao {
 		
 		//3.Statement 생성
 		stmt=conn.createStatement();
-		String sql="select * from emp02 order by ename desc";
+		String sql="select * from emp order by ename desc";
 		
 		//select의 결과 Resultset 객체를 담는다
 		rs=stmt.executeQuery(sql);

@@ -29,7 +29,7 @@
   	
   	
   	<!-- 데이터 베이스 드라이버 로드 -->
-  	<servlet>
+ <!--  	<servlet>
   		<servlet-name>Loader</servlet-name>
   		<servlet-class>jdbc.Loader</servlet-class>	
   		
@@ -44,6 +44,14 @@
   		</init-param>
   		
   		
+  		<load-on-startup>1</load-on-startup>
+  	</servlet> -->
+  	
+  	
+  	<!-- 컨텍션 풀 드라이버 등록 -->
+  	<servlet>
+  		<servlet-name>DBCPInit</servlet-name>
+  		<servlet-class>jdbc.DBCPInit</servlet-class>
   		<load-on-startup>1</load-on-startup>
   	</servlet>
   	
