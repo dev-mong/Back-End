@@ -11,7 +11,7 @@ public class ConnectionProvider {
 	
 	public static Connection getConnection() throws SQLException {
 	
-		String jdbcUrl="jdbc:apache:commoms:dbcp:pool";
+		String jdbcUrl="jdbc:apache:commons:dbcp:pool";
 		
 		//DB Connection 정보 
 		//String dbUrl="jdbc:oracle:thin:@localhost:1522:orcl";
