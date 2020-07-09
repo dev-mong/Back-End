@@ -75,7 +75,7 @@ public class MessageDao {
 			while (rs.next()) {
 				Message message = new Message(rs.getInt("message_id"), rs.getString("guest_name"),
 						rs.getString("password"), rs.getString("message"));
-
+							
 				list.add(message);
 			}
 

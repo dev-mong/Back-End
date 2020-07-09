@@ -51,7 +51,8 @@ public class GetMessageListService {
 			int startRow = 0;
 			// 페이지 마지막 행
 			int endRow = 0;
-
+			
+			
 			if (messageTotalCount > 0) {
 
 				// 시작 행, 마지막 행

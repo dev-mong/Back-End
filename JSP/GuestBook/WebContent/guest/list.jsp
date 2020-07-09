@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%
 
-	int pageNum=1; // 
+	int pageNum=1; 
 	String pageNumber = request.getParameter("page");
 	
 	if(pageNumber != null)
@@ -12,7 +12,7 @@
 		pageNum=Integer.parseInt(pageNumber);
 	}
 	
-	GetMessageListService service=GetMessageListService.getInstance();
+	GetMessageListService service = GetMessageListService.getInstance();
 	
 	// MessageListView 
 	MessageListView view = service.getMessageList(pageNum);
@@ -21,4 +21,4 @@
 
 %>
 
-<jsp:forward page="list_view.jsp"/>
+<jsp:forward page="list_view.jsp"/> 

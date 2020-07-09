@@ -23,7 +23,7 @@ div.msg_box {
 }
 
 form {
-	display: none;
+	/* display: none; */
 }
 
 .currentPage {
@@ -34,6 +34,8 @@ form {
 
 </head>
 <body>
+
+<h1>pageNumber</h1>
 
 	<h3>방명록 글 쓰기</h3>
 	<hr>

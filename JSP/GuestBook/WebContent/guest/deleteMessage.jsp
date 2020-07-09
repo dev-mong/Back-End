@@ -17,4 +17,7 @@
 	request.setAttribute("resultCode",resultCnt);
 	
 %>
+
+<%-- ${resultCode} --%>
+
 <jsp:forward page="deleteMessage_view.jsp"/>
