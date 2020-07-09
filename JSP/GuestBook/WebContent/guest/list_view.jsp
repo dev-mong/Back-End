@@ -14,6 +14,22 @@ table td {
 input, textarea {
 	padding: 5px;
 }
+
+div.msg_box {
+	width: 200px;
+	border: 3px solid #333;
+	margin: 5px;
+	padding: 10px;
+}
+
+form {
+	display: none;
+}
+
+.currentPage {
+	font-size: 1.5em;
+	font-weght: bold;
+}
 </style>
 
 </head>
@@ -51,19 +67,32 @@ input, textarea {
 	<hr>
 
 	<%-- ${listView} --%>
-	
-	<c:forEach items="${listView.messageList}" var="message">
-		
-		<div>
-			게시물 번호  ${message.mid} <br>
-			작성자 		${message.uname}<br>
-			메세지		${message.message}<br>
-			<a> 삭제 </a>
-		</div>
-		
-	</c:forEach>
+
+	<c:if test="${not empty listView.messageList}">
+
+		<c:forEach items="${listView.messageList}" var="message">
+
+			<div class="msg_box">
+				게시물 번호 ${message.mid} <br>
+				 작성자 ${message.uname}<br> 
+				 메세지 ${message.message}<br> 
+				<a href="deleteMessageConfirm.jsp?mid=${message.mid}"> 삭제 </a>
+			</div>
+
+		</c:forEach>
+
+	</c:if>
 
 
+	<div class="paging">
+		<c:if test="${listView.pageTotalCount > 0}">
+			<c:forEach begin="1" end="${listView.pageTotalCount}" var="num">
+				<a
+					href="list.jsp?page=${num}" class="${listView.currentPageNumber eq num ? 'currentPage' : ''}">[
+					${num} ]</a>
+			</c:forEach>
+		</c:if>
+	</div>
 
 
 
