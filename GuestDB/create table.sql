@@ -30,14 +30,18 @@ from(
 --2page 4~6 
 select message_id, guest_name, password, message
 from (
-
    select  rownum rnum,message_id, guest_name, password, message
     from(
         select * from guestbook_message m order by m.message_id desc
-    )where rownum<=6 -- end row
-    
+    )where rownum<=6 -- end row 
 )where rnum>=4; --start row
 
+
+--전체 게시물 개수 
+select count(*) from guestbook_message;
+
+select from guestbook_message where message_id=39;
+rollback;
 
 
 
