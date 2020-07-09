@@ -120,7 +120,6 @@
 
 	<hr>
 	날짜 포맷팅 <br>
-	홍콩 시간 <br> <fmt:timeZone value="Hongkong">
 	<fmt:formatDate value="${now}" pattern="yyyy.MM.dd H:mm:ss"/>
 	</fmt:timeZone>
 	
