@@ -49,6 +49,9 @@
   		<url-pattern>/*</url-pattern>
   	</filter-mapping>
   	
+  	<listener>
+  	<listener-class>listner.TestContextListner</listener-class>
+	</listener>
   	
   	
   	<!-- 데이터 베이스 드라이버 로드 -->
@@ -78,7 +81,10 @@
   		<load-on-startup>1</load-on-startup>
   	</servlet>
   	
-  	
+  	<context-param>
+  		<param-name>uploadPath</param-name>
+  		<param-value>/uploadFile/login/photo</param-value>
+  	</context-param>
   	
   	
   	
