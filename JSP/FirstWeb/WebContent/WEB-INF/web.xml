@@ -83,7 +83,8 @@
   	
   	<context-param>
   		<param-name>uploadPath</param-name>
-  		<param-value>/uploadFile/login/photo</param-value>
+  		<!-- <param-value>/uploadFile/login/photo</param-value> -->
+  		<param-value>/file</param-value>
   	</context-param>
   	
   	

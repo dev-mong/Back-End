@@ -1,27 +1,28 @@
+<%@page import="java.io.File"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
 <%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%
 	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-	if(isMultipart){
-		
-		DiskFileItemFactory factory = new DiskFileItemFactory();
+	if (isMultipart) {
+
+		DiskFileItemFactory factory = new DiskFileItemFactory(); //파일을 담을 공간
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		
+
 		List<FileItem> items = upload.parseRequest(request);
-		
+
 		Iterator<FileItem> ite = items.iterator();
-		
-		while(ite.hasNext()){
-			
+
+		while (ite.hasNext()) {
+
 			FileItem item = ite.next();
-			
+
 			// isFormField() : text value를 가지는 input 확인
-			if(item.isFormField()){ // type=file 이외의 input
+			if (item.isFormField()) { // type=file 이외의 input
 				// 파라미터 이름
 				String paramName = item.getFieldName();
 				// 파라미터의 값
@@ -42,12 +43,28 @@
 				System.out.println("파일 이름 : " + fileName);
 				System.out.println("파일 사이즈 : " + file_size);
 				System.out.println("파일 타입 : " + contentType);
+
+				//서버 내부의 경로
+				//String uri = "/file";
+
+				String uri = request.getSession().getServletContext().getInitParameter("uploadPath");
+
+				//시스템의 실제 (절대) 경로 - context 객체 
+				String realPath = request.getSession().getServletContext().getRealPath(uri);
+				//System.out.println(realPath);
+
+				String newFileName = System.currentTimeMillis()+"_"+fileName;
+				
+
+				//서버의 저장소에 실제 저장
+				File saveFile = new File(realPath, newFileName);
+				item.write(saveFile);
+				System.out.println("저장완료");
+
 			}
-			
-			
+
 		}
-		
-		
+
 	}
 %>
 <!DOCTYPE html>
