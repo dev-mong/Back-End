@@ -9,4 +9,6 @@ create table report(
 
 create sequence report_seq;
 
-insert into report values (report_seq.nextval, "홍길동", "1234","/file/123412341234_report.ppt");
+insert into report values (report_seq.nextval, '홍길동', '1234','/file/123412341234_report.ppt');
+
+select * from report;
