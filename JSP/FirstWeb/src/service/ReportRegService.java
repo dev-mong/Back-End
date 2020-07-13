@@ -44,7 +44,7 @@ public class ReportRegService {
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
 		if (isMultipart) {
-
+			
 			try {
 
 				DiskFileItemFactory factory = new DiskFileItemFactory(); // 파일을 담을 공간
@@ -67,14 +67,13 @@ public class ReportRegService {
 						// 파라미터의 값
 						String paramValue = item.getString("utf-8");
 
-						// System.out.println(paramName + " = " + paramValue);
-
+						 //System.out.println(paramName + " = " + paramValue);
 						if (paramName.equals("uname")) {
 							sname = paramValue;
 						} else if (paramName.equals("sno")) {
 							sno = paramValue;
 						}
-
+						
 					} else { // type=file
 						// 파라미터 이름
 						String paramName = item.getFieldName();
@@ -106,7 +105,6 @@ public class ReportRegService {
 						File saveFile = new File(realPath, newFileName);
 						item.write(saveFile);
 						System.out.println("저장완료");
-
 						filePath = uri + "/" + newFileName;
 
 					}

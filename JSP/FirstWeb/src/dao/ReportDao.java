@@ -18,10 +18,13 @@ public class ReportDao {
 	}
 
 	public int insertReport(Connection conn, Report report) throws SQLException {
+		
+		
 		int resultCnt = 0;
 		
 		PreparedStatement pstmt=null;
-		String sql="insert into report values (report_seq.nextval,?,?,?)";
+		String sql="insert into report "
+				+ "values (report_seq.nextval, ?, ?, ?)";
 		
 		try {
 			pstmt=conn.prepareStatement(sql);

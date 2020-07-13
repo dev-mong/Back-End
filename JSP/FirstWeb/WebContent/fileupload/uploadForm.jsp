@@ -9,8 +9,8 @@
 <body>
 
 <h1>과제 제출</h1>
-<form action="upload.jsp" method="post" enctype="multipart/form-data">
-	이름 : <input type="text" name="unmae"> <br>
+<form action="upload02.jsp" method="post" enctype="multipart/form-data">
+	이름 : <input type="text" name="uname"> <br>
 	학번 : <input type="text" name="sno"><br>
 	과제 파일 : <input type="file" name="report">
 	<input type="submit" value="제출">

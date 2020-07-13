@@ -13,4 +13,4 @@
 	request.setAttribute("result", result);
 %>
 
-<jsp:forward page="upload_view.jsp">
+<jsp:forward page="upload_view.jsp"/>

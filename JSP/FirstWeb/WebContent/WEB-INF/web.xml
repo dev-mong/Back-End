@@ -54,6 +54,14 @@
 	</listener>
   	
   	
+	<context-param>
+	<param-name>uploadPath</param-name>
+	 <!-- <param-value>/uploadFile/photo</param-value> -->
+	 <param-value>/uploadFile/photo</param-value>
+ 	<!--<param-value>/file</param-value> -->
+  	</context-param>
+  	
+  	
   	<!-- 데이터 베이스 드라이버 로드 -->
  <!--  	<servlet>
   		<servlet-name>Loader</servlet-name>
@@ -81,12 +89,6 @@
   		<load-on-startup>1</load-on-startup>
   	</servlet>
   	
-  	<context-param>
-  		<param-name>uploadPath</param-name>
-  		 <!-- <param-value>/uploadFile/photo</param-value> -->
-  		 <param-value>/fileupload/uploadForm</param-value>
-  <!-- 		<param-value>/file</param-value> -->
-  	</context-param>
   	
   	
   	
