@@ -7,14 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Index</h1>
-	
-	<ul>
-		<!-- http://localhost:8080/fc/index -->
-		<li><a href="index">index</a></li>
-		<li><a href="greeting">greeting</a></li>
-		<li><a href="date">date</a></li>
-	</ul>
-	
+	<h1>${name}</h1>
 </body>
 </html>
