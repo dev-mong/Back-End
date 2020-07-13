@@ -34,7 +34,7 @@ public class SimpleController extends HttpServlet {
 		
 		// 3. 핵심 처리 : 기능 수행
 		Object resultObj = null;
-		String  page="/simple_view,jsp";
+		String  page="/simple_view.jsp";
 
 		if (type == null || type.equals("greeting") || type == null) {
 			resultObj = "안녕하세요";
