@@ -82,6 +82,7 @@ public class FrontController extends HttpServlet {
 			}
 
 		}
+		
 
 //		commands.put("/", new IndexServiceImpl());
 //		commands.put("/index", new IndexServiceImpl());

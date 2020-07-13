@@ -71,7 +71,7 @@ public class FrontController extends HttpServlet {
 				Service service = (Service) serviceClass.newInstance();
 
 				commands.put(command, service);
-				System.out.println(command + "=" + service);
+				System.out.println(commands + "=" + service);
 
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
