@@ -3,7 +3,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%
 	String uid = request.getParameter("uid");
-
+	System.out.println(uid);
 	if (uid != null && uid.equals("test")) {
 		out.print("Y");
 	} else {
