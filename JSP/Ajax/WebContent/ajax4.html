@@ -7,32 +7,21 @@
 <style></style>
 </head>
 <body>
-	<input type="text" id="uid">
-	<span id="checkmsg"></span>
+	<h1>메뉴</h1>
 </body>
 </html>
 <script>
 	$(document).ready(function() { 
 
-		$('#uid').focusout(function() {
-
-			$.ajax({
-				url : 'idCheck.jsp',
-				type : 'GET', //POST, PUT, DELETE
-				data : {
-					uid : $(this).val()
-				},
-				success : function(data) {
-
-					if (data == 'Y') {
-						$('#checkmsg').html('사용 가능한 아이디입니다.');
-					} else {
-						$('#checkmsg').html('사용 불가능한 아이디입니다.');
-					}
-
-				}
+		$.getJSON('data_json.jsp',function(data){
+			
+			$.each(data, function(key, value){
+				
+				$('body').append('<h1>제품 : '+value.name+', 가격 : '+value.price+'</h1>');
+					
 			});
-
+			
+			
 		});
 
 	});
