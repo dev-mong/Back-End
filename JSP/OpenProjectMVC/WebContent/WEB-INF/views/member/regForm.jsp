@@ -1,63 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>RegForm</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/default.css">
- <style>
-* {
-	margin: 0;
-	padding: 0;
-}
-
-#header {
-	padding: 15px 20px;
-}
-
-#nav {
-	border-bottom: 1px solid #DDD;
-	border-top: 1px solid #DDD;
-	overflow: hidden;
-	list-style: none;
-}
-
-#nav>li {
-	float: left;
-	padding: 5px 20px;
-}
-
-footer {
-	text-align: center;
-	border: 1px solid #DDD;
-	padding: 20px 0;
-	margin-top: 10px;
-}
-
-#nav+div {
-	padding : 25px;
-}
-
-.subtitle{
-	padding : 15px 0;
-}
-
-hr {
-	border : 0px;
-	border-top:thin solid #ddd;
-	margin : 15px 0;
-}
-
-table.table td {
-	padding : 5px;
-}
-
-input[type=text], input[type=password], intpu[type=email] {
-	padding : 3px;
-}
-</style>
-
+<%-- <link rel="stylesheet" href="<%= request.getContextPath() %>/css/default.css"> --%>
+<link rel="stylesheet" href="<c:url value="/css/default.css"/>">
 
 </head>
 
@@ -69,7 +19,7 @@ input[type=text], input[type=password], intpu[type=email] {
 		<h1 class="subtilte">회원 가입</h1>
 	</div>
 	<hr>
-  	<form action="login.jsp" method="post" id="loginForm">
+  	<form action="memberReg.do" method="post" id="loginForm" enctype="multipart/form-data">
   	<table>
   		<tr>
   			<td>아이디(이메일)</td>
