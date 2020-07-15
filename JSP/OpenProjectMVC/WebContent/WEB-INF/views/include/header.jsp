@@ -15,7 +15,9 @@
 		<li><a href="<c:url value="/member/loginForm.jsp"/>">로그인</a></li>
 		</c:if>
 		
+		<li><a href="${pageContext.request.contextPath}/member/memberList.do">전체 회원 리스트</a></li>
+		
 		<li><a href="<c:url value="/member/mypage/mypage.jsp"/>">마이페이지</a></li>
 		<li><a href="<c:url value="/guestbook/list.jsp"/>">방명록(비회원)</a></li>
-		<li><a href="<c:url value="/board/list.jsp"/>">방명록(회원제)</a></li>
+		<li><a href="${pageContext.request.contextPath}/member/memberList.do">방명록(회원제)</a></li>
 	</ul>

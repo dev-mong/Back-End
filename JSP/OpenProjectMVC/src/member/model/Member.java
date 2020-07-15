@@ -4,14 +4,14 @@ import java.sql.Date;
 
 public class Member {
 
-	private String idx;
+	private int idx;
 	private String uid;
 	private String upw;
 	private String uname;
 	private String uphoto;
 	private Date regdate;
 
-	public Member(String idx, String uid, String upw, String uname, String uphoto, Date regdate) {
+	public Member(int idx, String uid, String upw, String uname, String uphoto, Date regdate) {
 		this.idx = idx;
 		this.uid = uid;
 		this.upw = upw;
@@ -23,11 +23,11 @@ public class Member {
 	public Member() {
 	}
 
-	public String getIdx() {
+	public int getIdx() {
 		return idx;
 	}
 
-	public void setIdx(String idx) {
+	public void setIdx(int idx) {
 		this.idx = idx;
 	}
 
