@@ -27,4 +27,8 @@
 	Service,view
 2. 화면 데이터 처리 (가입 처리)
 	Service, Dao(insert), view
-
+3. 아이디 체크
+	Service, Dao(select), view(html X -> test) Y | N
+	
+회원 리스트
+Service -> Dao -> ListView -> View
