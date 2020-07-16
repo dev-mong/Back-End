@@ -45,9 +45,11 @@
 				</tr>
 				<tr>
 					<td>사진</td>
-					<td> <img src="<c:url value="${member.uphoto}" />"/>
-					
-					<input type="file" name="photo"></td>
+					<td> <img src="<c:url value="${member.uphoto}"/>"/>
+						 <input type="hidden" value="${member.uphoto}" name="photo"> 
+					<input type="file" name="updatePhoto" value="${member.uphoto}" ></td>
+			
+				
 				</tr>
 				<tr>
 					<td></td>

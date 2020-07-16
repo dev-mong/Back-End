@@ -20,11 +20,11 @@ public class MemberDao {
 	}
 	
 	//데이터 저장
-	public int insertMember(Connection conn, Member member) throws SQLException {
 
+	public int insertMember(Connection conn, Member member) throws SQLException {
 		int resultCnt = 0;
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO member " + "(uid,upw,uname,uphoto) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO project.member " + "(uid,upw,uname,uphoto) VALUES (?,?,?,?)";
 
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class MemberDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="SELECT COUNT(*) FROM MEMBER WHERE UID=?";
+		String sql="SELECT COUNT(*) FROM project.member WHERE UID=?";
 
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -89,7 +89,7 @@ public class MemberDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 
-		String sql="SELECT COUNT(*) FROM MEMBER";
+		String sql="SELECT COUNT(*) FROM project.member";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -118,7 +118,7 @@ public class MemberDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs = null;
 		
-		String sql="SELECT * FROM MEMBER limit ?,?";
+		String sql="SELECT * FROM project.member limit ?,?";
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -158,7 +158,7 @@ public class MemberDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		
-		String sql="SELECT * FROM MEMBER WHERE IDX=?";
+		String sql="SELECT * FROM project.member WHERE IDX=?";
 		Member member=new Member();
 		
 		try {
@@ -196,7 +196,7 @@ public class MemberDao {
 		int resultCnt=0;
 		
 		
-		//String sql="UPDATE MEMBER SET UPW=?, UNAME=?, UPHOTO=? WHERE IDX=?";
+		String sql="UPDATE MEMBER SET UPW=?, UNAME=?, UPHOTO=? WHERE IDX=?";
 		//pstmt=conn.prepareStatement(sql);
 		
 		return 0;

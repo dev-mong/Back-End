@@ -22,7 +22,7 @@ import service.Service;
 
 public class UpdateServiceImpl implements Service {
 
-	MemberDao dao=null;
+	MemberDao dao = null;
 
 	@Override
 	public String getViewPage(HttpServletRequest request, HttpServletResponse response) {
@@ -37,8 +37,10 @@ public class UpdateServiceImpl implements Service {
 		String upw = null;
 		String uname = null;
 		String uphoto = null;
+		String photo=null;
 		
 		Connection conn = null;
+
 
 		try {
 			
@@ -71,32 +73,50 @@ public class UpdateServiceImpl implements Service {
 							upw = paramValue;
 						} else if(paramName.equals("uname")) {
 							uname = paramValue;
+						} else if(paramName.equals("photo")) {
+							photo=paramValue;
 						}
 						
 					} else { // type=file
 						
-						// 서버 내부의 경로
+						if(item.getFieldName().equals("photo") && item.getSize()>0) {
 						String uri = "/upload/user";
 	
 						//String uri = request.getSession().getServletContext().getInitParameter("uploadPath");
 	
 						// 시스템의 실제(절대) 경로
 						String realPath = request.getSession().getServletContext().getRealPath(uri);
-						 System.out.println(realPath);
-	
+						System.out.println(realPath);
+						
 						String newFileName = System.nanoTime() + "_" + item.getName();
-	
+						
+						
 						// 서버의 저장소에 실제 저장
 						File saveFile = new File(realPath, newFileName);
 						item.write(saveFile);
 						System.out.println("저장 완료");
 						
 						uphoto = uri+"/"+newFileName;
-	
+						}
+						
 					}
+					
 	
 				}
-				
+			}
+					
+				if(uphoto != null) {
+					
+					//이전 파일 경로를 저장 
+					File saveFile = new File(request.getSession().getServletContext().getRealPath(photo));
+					
+					if(saveFile.exists()) { //존재여부 확인
+						if(saveFile.delete()) { //기존 파일을 삭제 후 
+							System.out.println("새로운 파일이 추가되어 이전파일은 삭제합니다.");
+						}
+					}
+				}
+				System.out.println(uphoto);
 				
 				// 데이터 베이스 저장 
 				Member member = new Member();
@@ -111,12 +131,12 @@ public class UpdateServiceImpl implements Service {
 				
 				resultCnt = dao.updateMember(conn, member);
 				
-				request.setAttribute("member", member);
+				request.setAttribute("updateMember", member);
 				request.setAttribute("result", resultCnt);
 				
 				
 	
-			}
+			
 		} catch (FileUploadException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {

@@ -9,5 +9,8 @@
 </head>
 <body>
 	<h1>수정페이지</h1>
+	
+	${updateMember}
+	
 </body>
 </html>
