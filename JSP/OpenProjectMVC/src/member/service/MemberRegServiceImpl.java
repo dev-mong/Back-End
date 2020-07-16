@@ -84,7 +84,7 @@ public class MemberRegServiceImpl implements Service {
 	
 						// 시스템의 실제(절대) 경로
 						String realPath = request.getSession().getServletContext().getRealPath(uri);
-						// System.out.println(realPath);
+						 System.out.println(realPath);
 	
 						String newFileName = System.nanoTime() + "_" + item.getName();
 	
@@ -120,16 +120,12 @@ public class MemberRegServiceImpl implements Service {
 	
 			}
 		} catch (FileUploadException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			
@@ -137,7 +133,6 @@ public class MemberRegServiceImpl implements Service {
 				try {
 					conn.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

@@ -15,9 +15,14 @@
 	}
 	th, td{
 		border: 1px solid #444444;
-		margin:10px;
+		padding: 10px;
 		text-align: center;
 	}
+	img{
+		width: 100px;
+		height: 100px;
+	}
+
 </style>
 
 </head>
@@ -44,14 +49,14 @@
 				<td>${member.uid}</td>
 				<td>${member.upw}</td>
 				<td>${member.uname}</td>
-				<td>${member.uphoto}</td>
+				<td>
+				<img src="<c:url value="${member.uphoto}"/>">
+				</td>
 				<td>${member.regdate}</td>
-				<td><a href="">수정</a> | <a href="">삭제</a></td>
+				<td><a href="<c:url value="/member/memberUpdateForm.do?index=${member.idx}" />">수정</a> | <a href="">삭제</a></td>
 			</tr>
 		</c:forEach>
 	</c:if>
-	
-	
 	</table>
 	
 	<div class="paging">
@@ -59,8 +64,8 @@
 			<c:forEach begin="1" end="${memberListView.pageTotalCount}" var="num">
 				<a
 					href="${pageContext.request.contextPath}/member/memberList.do?page=${num}" 
-					class="${listView.currentPageNumber eq num ? 'currentPage' : ''}"
-					>[${num} ]</a>
+					<%-- class="${memberListView.currentPageNumber eq num ? 'currentPage' : ''}" --%>
+					>[${num}]</a>
 			</c:forEach>
 		</c:if>
 	</div> 

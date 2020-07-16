@@ -152,6 +152,56 @@ public class MemberDao {
 	}
 
 
+	//인덱스 번호로  회원 정보 검색
+	public Member selectByIdx(Connection conn, int indexNum) throws SQLException {
+
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		String sql="SELECT * FROM MEMBER WHERE IDX=?";
+		Member member=new Member();
+		
+		try {
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, indexNum);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member.setIdx(rs.getInt("idx"));
+				member.setUid(rs.getString("uid"));
+				member.setUpw(rs.getString("upw"));
+				member.setUname(rs.getString("uname"));
+				member.setUphoto(rs.getString("uphoto"));
+				member.setRegdate(rs.getDate("regdate"));
+			}
+			
+		}finally {
+			if(rs !=null) {
+				rs.close();
+			}
+			if(pstmt !=null) {
+				pstmt.close();
+			}
+		}
+		
+		return member;
+	}
+
+	//회원 정보 수정
+	public int updateMember(Connection conn, Member member) {
+		
+		PreparedStatement pstmt=null;
+		int resultCnt=0;
+		
+		
+		//String sql="UPDATE MEMBER SET UPW=?, UNAME=?, UPHOTO=? WHERE IDX=?";
+		//pstmt=conn.prepareStatement(sql);
+		
+		return 0;
+	}
+	
 	
 	
 	
