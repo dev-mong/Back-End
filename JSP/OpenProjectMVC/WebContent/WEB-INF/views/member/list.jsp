@@ -30,7 +30,6 @@
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	<h1>회원 리스트</h1>
 	<hr>
-	
 	<table>
 	<tr>
 		<th>no</th>
@@ -50,10 +49,11 @@
 				<td>${member.upw}</td>
 				<td>${member.uname}</td>
 				<td>
-				<img src="<c:url value="${member.uphoto}"/>">
+				<img src="<c:url value="${member.uphoto}"/>">${member.uphoto}
 				</td>
 				<td>${member.regdate}</td>
-				<td><a href="<c:url value="/member/memberUpdateForm.do?index=${member.idx}" />">수정</a> | <a href="">삭제</a></td>
+				<td><a href="<c:url value="/member/memberUpdateForm.do?index=${member.idx}" />">수정</a> 
+				| <a href="/member/meberDeleteComfirm.do?member=${member}">삭제</a></td>
 			</tr>
 		</c:forEach>
 	</c:if>
