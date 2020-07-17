@@ -53,7 +53,7 @@
 				</td>
 				<td>${member.regdate}</td>
 				<td><a href="<c:url value="/member/memberUpdateForm.do?index=${member.idx}" />">수정</a> 
-				| <a href="/member/meberDeleteComfirm.do?member=${member}">삭제</a></td>
+				| <a href="<c:url value="/member/memberDeleteComfirm.do?index=${member.idx}" />">삭제</a></td>
 			</tr>
 		</c:forEach>
 	</c:if>

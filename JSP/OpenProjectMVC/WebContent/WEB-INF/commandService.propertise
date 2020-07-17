@@ -16,3 +16,4 @@
 /member/memberUpdate.do=member.service.UpdateServiceImpl
 #회원 리스트 삭제
 /member/memberDeleteComfirm.do=member.service.DeleteComfirmServiceImpl
+/member/memberdelete.do=member.service.DeleteServiceImpl
