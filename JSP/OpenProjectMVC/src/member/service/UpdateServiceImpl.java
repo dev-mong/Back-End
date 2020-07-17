@@ -79,7 +79,7 @@ public class UpdateServiceImpl implements Service {
 						
 					} else { // type=file
 						
-						if(item.getFieldName().equals("photo") && item.getSize()>0) {
+						if(item.getFieldName().equals("updatePhoto") && item.getSize()>0) {
 						String uri = "/upload/user";
 	
 						//String uri = request.getSession().getServletContext().getInitParameter("uploadPath");
@@ -115,9 +115,13 @@ public class UpdateServiceImpl implements Service {
 							System.out.println("새로운 파일이 추가되어 이전파일은 삭제합니다.");
 						}
 					}
+				}else {
+					//이전 파일 경로 저장
+					uphoto = photo;
+					
 				}
-				System.out.println(uphoto);
 				
+				System.out.println(uphoto);
 				// 데이터 베이스 저장 
 				Member member = new Member();
 				member.setUid(uid);
@@ -132,10 +136,8 @@ public class UpdateServiceImpl implements Service {
 				resultCnt = dao.updateMember(conn, member);
 				
 				request.setAttribute("updateMember", member);
-				request.setAttribute("result", resultCnt);
+				//request.setAttribute("result", resultCnt);
 				
-				
-	
 			
 		} catch (FileUploadException e) {
 			e.printStackTrace();

@@ -190,16 +190,32 @@ public class MemberDao {
 	}
 
 	//회원 정보 수정
-	public int updateMember(Connection conn, Member member) {
+	public int updateMember(Connection conn, Member member) throws SQLException {
 		
 		PreparedStatement pstmt=null;
 		int resultCnt=0;
 		
 		
-		String sql="UPDATE MEMBER SET UPW=?, UNAME=?, UPHOTO=? WHERE IDX=?";
-		//pstmt=conn.prepareStatement(sql);
+		String sql="UPDATE project.member SET UPW=?, UNAME=?, UPHOTO=? WHERE UID=?";
 		
-		return 0;
+		try {
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,member.getUpw());
+			pstmt.setString(2,member.getUname());
+			pstmt.setString(3,member.getUphoto());
+			pstmt.setString(4,member.getUid());
+			
+			resultCnt=pstmt.executeUpdate();
+			
+			
+		}finally {
+			if(pstmt !=null) {
+				pstmt.close();
+			}
+			
+		}
+		return resultCnt;
 	}
 	
 	
