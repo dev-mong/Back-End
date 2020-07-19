@@ -17,16 +17,19 @@
 	
 	<hr>
 		<!-- memberdelete.do -->
-		<form id="regForm" action="" method="post" enctype="multipart/form-data">
+		<form id="regForm" method="post" enctype="multipart/form-data">
 			
 			<div class="info">
-				<div>회원 아이디 : ${member.uid}</div>
-				<div>회원 아이디 : ${member.upw}</div>
-				<div>회원 아이디 : ${member.uname}</div>
+				<input type="hidden" id="idx" value="${member.idx}">
+				<input type="text" id="uid" value="${member.uid}"> 회원 아이디 : ${member.uid}
+				<input type="hidden" id="upw" value="${member.upw}">
+				<input type="text" id="uid" value="${member.uname}">회원 이름: ${member.uname}
 			</div>
+			
 			<input type="submit" value="삭제하기">
 		</form>
-	
+		
+		<input type="button" value="비밀번호 확인" id="check">
 	
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>
 
@@ -36,13 +39,34 @@
 	
 	
 	$(document).ready(function(){
-		$('#regForm').submit(function(){
-			var upw=prompt("삭제하시려면 비밀번호를 입력하세요");
+		$('#check').click(function(){
 			
-			/* var html="";
-			html += "<input type="text" name="upw" value="+upw+">";
-			$(this).append(html); */
+			var checkPw= prompt("비밀번호를 입력하세요.");
+			var upw= $('#upw').val();
+			
+			if(checkPw == upw){
+				
+				$.ajax({
+					type: 'post',
+					url : 'memberdelete.do',
+					data : {
+						idx : $('#idx').val()
+					},
+					sucess:function(data){
+						console.log(12313131312312);
+					}
+					
+					
+					
+				});
+				
+				
+			}
+			
+		
 		});
+		
+		
 	});
 	
 		

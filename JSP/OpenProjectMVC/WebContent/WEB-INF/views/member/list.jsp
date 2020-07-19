@@ -34,8 +34,8 @@
 	<tr>
 		<th>no</th>
 		<th>아이디</th>
-		<th>이름</th>
 		<th>비밀번호</th>
+		<th>이름</th>
 		<th>사진</th>
 		<th>날짜</th>
 		<th>수정/삭제</th>
