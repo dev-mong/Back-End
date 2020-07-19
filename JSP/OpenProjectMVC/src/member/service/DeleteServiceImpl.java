@@ -13,37 +13,34 @@ import service.Service;
 
 public class DeleteServiceImpl implements Service {
 
-	MemberDao dao=null;
-	
+	MemberDao dao = null;
+
 	@Override
 	public String getViewPage(HttpServletRequest request, HttpServletResponse response) {
 
-		String uid = request.getParameter("uid");
-		
+		// 아이디값을 이용해서 데이터 삭제
+		Connection conn = null;
+		Member member = null;
+		int resultCnt = 0;
 
-		//아이디값을 이용해서 데이터 삭제
-		Connection conn=null;
-		Member member=null;
-		int resultCnt=0;
-		
-		String index=request.getParameter("idx");
-		int indexNum=Integer.parseInt(index);
-		
+		String index = request.getParameter("idx");
+		System.out.println(index);
+		int indexNum = Integer.parseInt(index);
+
 		try {
-		
-			conn=ConnectionProvider.getConnection();
-			dao=MemberDao.getInstance();
+
+			conn = ConnectionProvider.getConnection();
+			dao = MemberDao.getInstance();
 			resultCnt = dao.deleteMember(conn, indexNum);
-			
-			
-			if(resultCnt >0 ) {
+
+			if (resultCnt > 0) {
 				member = dao.selectByIdx(conn, indexNum);
-				request.setAttribute("member", member);	
+				request.setAttribute("member", member);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if(conn !=null) {
+			if (conn != null) {
 				try {
 					conn.close();
 				} catch (SQLException e) {
@@ -51,9 +48,7 @@ public class DeleteServiceImpl implements Service {
 				}
 			}
 		}
-		
-		
-		
+
 		return "/WEB-INF/views/member/list.jsp";
 	}
 

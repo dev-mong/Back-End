@@ -17,16 +17,16 @@
 	
 	<hr>
 		<!-- memberdelete.do -->
-		<form id="regForm" method="post" enctype="multipart/form-data">
+		<form id="regForm" action="memberdelete.do" method="post">
 			
 			<div class="info">
-				<input type="hidden" id="idx" value="${member.idx}">
-				<input type="text" id="uid" value="${member.uid}"> 회원 아이디 : ${member.uid}
+				<input type="hidden" name="idx" value="${member.idx}">
+				<input type="text" name="uid" value="${member.uid}"> 회원 아이디 : ${member.uid}
 				<input type="hidden" id="upw" value="${member.upw}">
-				<input type="text" id="uid" value="${member.uname}">회원 이름: ${member.uname}
+				<input type="text" value="${member.uname}">회원 이름: ${member.uname}
 			</div>
 			
-			<input type="submit" value="삭제하기">
+			<input type="submit" value="삭제하기" >
 		</form>
 		
 		<input type="button" value="비밀번호 확인" id="check">
@@ -40,27 +40,14 @@
 	
 	$(document).ready(function(){
 		$('#check').click(function(){
-			
 			var checkPw= prompt("비밀번호를 입력하세요.");
 			var upw= $('#upw').val();
 			
 			if(checkPw == upw){
-				
-				$.ajax({
-					type: 'post',
-					url : 'memberdelete.do',
-					data : {
-						idx : $('#idx').val()
-					},
-					sucess:function(data){
-						console.log(12313131312312);
-					}
-					
-					
-					
-				});
-				
-				
+				alert("회원정보가 삭제되었습니다.");	
+				$('#regForm').submit();
+			}else{
+				alert("비밀번호가 일치하지않습니다. 다시 입력해주세요.");
 			}
 			
 		
