@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
+import com.mysql.cj.protocol.Resultset;
+
 import member.model.Member;
 
 public class MemberDao {
@@ -234,6 +236,36 @@ public class MemberDao {
 		}
 
 		return resultCnt;
+	}
+
+	// 아이디 값을 이용하여 데이터 출력
+	public Member selectByUid(Connection conn, String uid) throws SQLException {
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member member=null;
+		
+		String sql = "SELECT * FROM project.member WHERE UID=?";
+		try {
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+
+			rs = pstmt.executeQuery();
+
+			if (rs != null) {
+				
+				member = new Member();
+				member.setIdx(rs.getInt("idx"));
+				member.setUid(rs.getString("uid"));
+				member.setUid(rs.getString("upw"));
+			}
+
+		} finally {
+
+		}
+
+		return member;
 	}
 
 }
