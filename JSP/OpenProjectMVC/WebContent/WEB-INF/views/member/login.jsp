@@ -12,24 +12,22 @@
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 
 	<div>
-		<h1 class="subtitle">로그인</h1>
+		<h1 class="subtitle">
+		
+		<c:set var="name" value="홍길동" />
+		<c:choose>
+		    <c:when test="${member != null}">
+		     	${member.uid }☞ 환영합니다  ☜
+		    </c:when>
+		    <c:otherwise>
+		    	로그인 실패 
+		    </c:otherwise>
+   	 	</c:choose>
+
+
+
+		</h1>
 		<hr>
-
-		<form action="memberLogin.do" method="post">
-			<table>
-				<tr>
-					<td>아이디 (이메일)</td>
-					<td><input type="text" name="uid"></td>
-				</tr>
-				<tr>
-					<td>비밀번호</td>
-					<td><input type="password" name="upw"></td>
-				</tr>
-			</table>
-
-			<input type="submit" value="로그인">
-			
-		</form>
 
 	</div>
 

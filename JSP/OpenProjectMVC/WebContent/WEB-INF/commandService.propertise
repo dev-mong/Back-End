@@ -19,3 +19,4 @@
 /member/memberdelete.do=member.service.DeleteServiceImpl
 #회원 로그인
 /member/memberLoginForm.do=member.service.LoginFormImpl
+/member/memberLogin.do=member.service.LoginImpl
