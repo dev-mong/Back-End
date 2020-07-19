@@ -20,7 +20,6 @@ public class DeleteServiceImpl implements Service {
 
 		// 아이디값을 이용해서 데이터 삭제
 		Connection conn = null;
-		Member member = null;
 		int resultCnt = 0;
 
 		String index = request.getParameter("idx");

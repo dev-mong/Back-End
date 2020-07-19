@@ -213,27 +213,26 @@ public class MemberDao {
 
 	// 회원 정보 삭제
 	public int deleteMember(Connection conn, int indexNum) throws SQLException {
-		
-		PreparedStatement pstmt=null;
-		
-		int resultCnt =0;
-		
-		String sql="DELETE FROM project.member WHERE IDX=?";
-		
+
+		PreparedStatement pstmt = null;
+
+		int resultCnt = 0;
+
+		String sql = "DELETE FROM project.member WHERE IDX=?";
+
 		try {
-			
-			pstmt=conn.prepareStatement(sql);
+
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, indexNum);
-			
-			resultCnt =pstmt.executeUpdate();
-			
-		
-		}finally {
-			if(pstmt !=null) {
+
+			resultCnt = pstmt.executeUpdate();
+
+		} finally {
+			if (pstmt != null) {
 				pstmt.close();
 			}
 		}
-		
+
 		return resultCnt;
 	}
 

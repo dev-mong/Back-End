@@ -42,7 +42,8 @@
 		
 		</form>
 		
-		<div id="count"></div>
+		<div id="count">
+		</div>
 		
 		<input type="button" value="회원 정보 삭제하기" id="check">
 	
@@ -52,19 +53,17 @@
 </html>
 <script>
 	
-	
 		$('#check').click(function(){
 			var html='비밀번호 입력 : <input type="text" id="checkPw">';
 			$('#count').append(html);
 		
-			var upw= $('#upw').val();
-			var checkPw=$('#checkPw').val();
+			var upw = $('#upw').val();
 			var i=1;
 			
 			$('#checkPw').keydown(function(key){
 			
 			if (key.keyCode == 13) {
-				
+				var checkPw = $('#checkPw').val();
 				if(checkPw == upw){
 					$('#regForm').submit();
 				}
@@ -80,10 +79,7 @@
 					} 
 					 i++;
 				}
-				
-				
 			}
-			
 			});
 		});
 		
