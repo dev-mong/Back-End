@@ -9,6 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="<c:url value="/css/default.css"/>">
 <style>
+	
+
 	table{
 		 border: 1px solid #444444;
 		 border-collapse: collapse;
@@ -28,7 +30,10 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
-	<h1>회원 리스트</h1>
+	
+	<div >
+	<c:if test="${not empty memberListView.memberList}">
+	<h1 class="subtitle">회원 리스트</h1>
 	<hr>
 	<table>
 	<tr>
@@ -41,7 +46,6 @@
 		<th>수정/삭제</th>
 	</tr>
 
-	<c:if test="${not empty memberListView.memberList}">
 		<c:forEach var="member" items="${memberListView.memberList}">
 			<tr>
 				<td>${member.idx}</td>
@@ -49,15 +53,20 @@
 				<td>${member.upw}</td>
 				<td>${member.uname}</td>
 				<td>
-				<img src="<c:url value="${member.uphoto}"/>">${member.uphoto}
+				<img src="<c:url value="${member.uphoto}"/>">
 				</td>
 				<td>${member.regdate}</td>
 				<td><a href="<c:url value="/member/memberUpdateForm.do?index=${member.idx}" />">수정</a> 
 				| <a href="<c:url value="/member/memberDeleteComfirm.do?index=${member.idx}" />">삭제</a></td>
 			</tr>
 		</c:forEach>
-	</c:if>
+	
 	</table>
+	</c:if>
+	<c:if test="${empty memberListView.memberList}">
+		<h3>등록된 회원 정보가 없습니다.</h3>
+	</c:if>
+	
 	
 	<div class="paging">
 		<c:if test="${memberListView.pageTotalCount > 0}">
@@ -69,6 +78,9 @@
 			</c:forEach>
 		</c:if>
 	</div> 
+	
+	
+	</div>
 	
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%> 
 </body>
