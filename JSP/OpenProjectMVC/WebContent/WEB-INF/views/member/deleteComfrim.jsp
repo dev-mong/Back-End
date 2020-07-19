@@ -8,6 +8,15 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="<c:url value="/css/default.css"/>">
+<style>
+	td{
+		padding:10px;
+	}
+	.error{
+		color : red;
+	}
+	
+</style>
 
 </head>
 <body>
@@ -18,18 +27,24 @@
 	<hr>
 		<!-- memberdelete.do -->
 		<form id="regForm" action="memberdelete.do" method="post">
-			
-			<div class="info">
-				<input type="hidden" name="idx" value="${member.idx}">
-				<input type="text" name="uid" value="${member.uid}"> 회원 아이디 : ${member.uid}
-				<input type="hidden" id="upw" value="${member.upw}">
-				<input type="text" value="${member.uname}">회원 이름: ${member.uname}
-			</div>
-			
-			<input type="submit" value="삭제하기" >
+			<table>
+				<tr>
+					<th>회원 아이디</th>
+					<td><input type="hidden" name="idx" value="${member.idx}">${member.uid}</td>
+				</tr>
+				
+				<tr>
+					<th>회원 이름</th>
+					<td><input type="hidden" id="upw" value="${member.upw}">${member.uname}</td>
+				</tr>
+				
+			</table>
+		
 		</form>
 		
-		<input type="button" value="비밀번호 확인" id="check">
+		<div id="count"></div>
+		
+		<input type="button" value="회원 정보 삭제하기" id="check">
 	
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>
 
@@ -38,24 +53,40 @@
 <script>
 	
 	
-	$(document).ready(function(){
 		$('#check').click(function(){
-			var checkPw= prompt("비밀번호를 입력하세요.");
+			var html='비밀번호 입력 : <input type="text" id="checkPw">';
+			$('#count').append(html);
+		
 			var upw= $('#upw').val();
+			var checkPw=$('#checkPw').val();
+			var i=1;
 			
-			if(checkPw == upw){
-				alert("회원정보가 삭제되었습니다.");	
-				$('#regForm').submit();
-			}else{
-				alert("비밀번호가 일치하지않습니다. 다시 입력해주세요.");
+			$('#checkPw').keydown(function(key){
+			
+			if (key.keyCode == 13) {
+				
+				if(checkPw == upw){
+					$('#regForm').submit();
+				}
+				else{
+						$('.error').remove();
+						var	html ='<div class="error">(로그인 오류 '+i+'회) </div>'+
+						'<div class="error">3회 이상 로그인 오류 시 보안을 위해 계정이 제한됩니다.</div>';
+						$('#count').append(html);
+					 if(i>=3){
+						 $('.error').remove();
+						alert("비밀번호 입력 횟수를 초과했습니다. 메인으로 돌아갑니다.");
+						location.href='<c:url value="/member/memberList.do"/>';
+					} 
+					 i++;
+				}
+				
+				
 			}
 			
-		
+			});
 		});
 		
-		
-	});
-	
 		
 
 </script>

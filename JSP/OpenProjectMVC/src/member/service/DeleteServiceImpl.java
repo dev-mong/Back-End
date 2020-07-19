@@ -32,11 +32,7 @@ public class DeleteServiceImpl implements Service {
 			conn = ConnectionProvider.getConnection();
 			dao = MemberDao.getInstance();
 			resultCnt = dao.deleteMember(conn, indexNum);
-
-			if (resultCnt > 0) {
-				member = dao.selectByIdx(conn, indexNum);
-				request.setAttribute("member", member);
-			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -49,7 +45,7 @@ public class DeleteServiceImpl implements Service {
 			}
 		}
 
-		return "/WEB-INF/views/member/list.jsp";
+		return "/WEB-INF/views/member/delete.jsp";
 	}
 
 }
