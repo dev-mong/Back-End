@@ -253,8 +253,7 @@ public class MemberDao {
 
 			rs = pstmt.executeQuery();
 
-			if (rs != null) {
-				
+			while (rs.next()) {
 				member = new Member();
 				member.setIdx(rs.getInt("idx"));
 				member.setUid(rs.getString("uid"));

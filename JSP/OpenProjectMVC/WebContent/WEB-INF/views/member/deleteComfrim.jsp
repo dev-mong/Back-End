@@ -55,39 +55,33 @@ td {
 </body>
 </html>
 <script>
-	$('#check')
-			.click(
-					function() {
-						var html = '비밀번호 입력 : <input type="text" id="checkPw">';
-						$('#count').append(html);
+		$('#check').click(function() {
+				var html = '비밀번호 입력 : <input type="text" id="checkPw">';
+				$('#count').append(html);
 
-						var upw = $('#upw').val();
-						var i = 1;
+				var upw = $('#upw').val();
+				var i = 1;
 
-						$('#checkPw')
-								.keydown(
-										function(key) {
-
-											if (key.keyCode == 13) {
-												var checkPw = $('#checkPw')
-														.val();
-												if (checkPw == upw) {
-													$('#regForm').submit();
-												} else {
-													$('.error').remove();
-													var html = '<div class="error">(로그인 오류 '
-															+ i
-															+ '회) </div>'
-															+ '<div class="error">3회 이상 로그인 오류 시 보안을 위해 계정이 제한됩니다.</div>';
-													$('#count').append(html);
-													if (i >= 3) {
-														$('.error').remove();
-														alert("비밀번호 입력 횟수를 초과했습니다. 메인으로 돌아갑니다.");
-														location.href = '<c:url value="/member/memberList.do"/>';
-													}
-													i++;
-												}
-											}
-										});
-					});
+				$('#checkPw').keydown(function(key) {
+					if (key.keyCode == 13) {
+						var checkPw = $('#checkPw').val();
+						if (checkPw == upw) {
+							$('#regForm').submit();
+						} else {
+							$('.error').remove();
+							var html = '<div class="error">(로그인 오류 '+ i+ '회) </div>'
+									+ '<div class="error">3회 이상 로그인 오류 시 보안을 위해 계정이 제한됩니다.</div>';
+							$('#count').append(html);
+							
+							if (i >= 3) {
+								$('.error').remove();
+								alert("비밀번호 입력 횟수를 초과했습니다. 메인으로 돌아갑니다.");
+								location.href = '<c:url value="/member/memberList.do"/>';
+							}
+							
+							i++;
+						}
+					}
+				});
+			});
 </script>
