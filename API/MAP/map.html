@@ -247,7 +247,7 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 // 지도에 마우스 오른쪽 클릭이벤트를 등록합니다
 // 원을 그리고있는 상태에서 마우스 오른쪽 클릭 이벤트가 발생하면
 // 마우스 오른쪽 클릭한 위치를 기준으로 원과 원의 반경정보를 표시하는 선과 커스텀 오버레이를 표시하고 그리기를 종료합니다
-kakao.maps.event.addListener(map, 'rightclick', function (mouseEvent) {
+kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
 
     if (drawingFlag) {
 
