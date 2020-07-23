@@ -1,5 +1,14 @@
+<%@page import="board.model.RequestWritingList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	RequestWritingList list = (RequestWritingList) request.getAttribute("requestWrtingList");
+
+
+%>
+
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,15 +130,17 @@
             requestLoc.longitude = coords.Ha;
 
         }
-
-	
-        var addr='${requestList.req_loc}';
-       console.log(addr);
+        
+    	<c:forEach var="requestList"
+			items="${requestWrtingList.requestWriting}">
+			
+				var name=${requestList.req_loc};
+								
 
 
 
         // 주소로 좌표를 검색합니다
-        geocoder.addressSearch(addr, function(result, status) {
+        geocoder.addressSearch(name , function(result, status) {
 
             // 정상적으로 검색이 완료됐으면 
             if (status === kakao.maps.services.Status.OK) {
@@ -158,7 +169,7 @@
             }
         });
 
-
+        </c:forEach>
 
 
         //나의 현재 위치 값을 담을 객체 

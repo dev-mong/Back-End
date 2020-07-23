@@ -153,6 +153,13 @@ public class RequestWriting {
 	public void setReq_img(String req_img) {
 		this.req_img = req_img;
 	}
+
+	@Override
+	public String toString() {
+		
+		
+		return req_loc;
+	}
 	
 	
 	

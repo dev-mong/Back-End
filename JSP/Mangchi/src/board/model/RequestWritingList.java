@@ -4,21 +4,16 @@ import java.util.List;
 
 public class RequestWritingList {
 	
-		// 전체 회원 정보 개수
 		private int requestTotalCount;
 
-		// 페이지 당 표현 할 회원 정보 개수 - 상수
 		private int requestCountPage;
 
 		private int pageTotalCount;
 		
-		// 현재 페이지의 번호
 		private int currentPageNumber;
 
-		// 출력 할 멤버 리스트
 		private List<RequestWriting> requestWriting;
 
-		// 게시물의 시작 행
 		private int startRow;
 
 		public RequestWritingList(int requestTotalCount, int requestCountPage,
@@ -96,6 +91,12 @@ public class RequestWritingList {
 		public void setStartRow(int startRow) {
 			this.startRow = startRow;
 		}
+
+		@Override
+		public String toString() {
+			return "" + requestWriting +"";
+		} 	
+		
 		
 		
 		

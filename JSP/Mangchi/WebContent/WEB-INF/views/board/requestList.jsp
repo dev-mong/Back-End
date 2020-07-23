@@ -49,11 +49,10 @@
 		</tr>
 
 		<c:forEach var="requestList"
-			items="${requuestWrtingList.requestWriting}">
+			items="${requestWrtingList.requestWriting}">
 			<tr>
-				<%-- <td>${requestList.req_idx}</td> --%>
 				<td>${requestList.req_writer}</td>
-				<td>${requestList.req_title}</td>
+				<td><a href=" <c:url value="/board/detailrequestinfo.do?idx=${requestList.req_idx} "/>">${requestList.req_title}</a></td>
 				<td>${requestList.req_price}</td>
 				<td>${requestList.req_regdate}</td>
 				<td>${requestList.req_term}</td>
@@ -67,13 +66,14 @@
 		</c:forEach>
 
 	</table>
+	
 
 	<div class="paging">
-		<c:if test="${requuestWrtingList.pageTotalCount > 0}">
-			<c:forEach begin="1" end="${requuestWrtingList.pageTotalCount}" var="num">
+		<c:if test="${requestWrtingList.pageTotalCount > 0}">
+			<c:forEach begin="1" end="${requestWrtingList.pageTotalCount}" var="num">
 				<a
-					href=" <c:url value="/member/boarding.do?page=${num}" />"
-					<%-- class="${memberListView.currentPageNumber eq num ? 'currentPage' : ''}" --%>
+					href=" <c:url value="/board/boarding.do?page=${num}" />"
+					<%-- class="${requuestWrtingList.currentPageNumber eq num ? 'currentPage' : ''}" --%>
 					>[${num}]</a>
 			</c:forEach>
 		</c:if>

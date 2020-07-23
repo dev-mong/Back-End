@@ -65,7 +65,7 @@ public class RequestBoardListServiceImpl implements Service {
 			  
 			  
 			  
-			  request.setAttribute("requuestWrtingList", requuestWrtingList);
+			  request.setAttribute("requestWrtingList", requuestWrtingList);
 			 
 
 		} catch (SQLException e) {
@@ -80,7 +80,8 @@ public class RequestBoardListServiceImpl implements Service {
 			}
 		}
 
-		return "/WEB-INF/views/board/requestList.jsp";
+		//return "/WEB-INF/views/board/requestList.jsp";
+		return "/WEB-INF/views/board/map.jsp";
 	}
 
 }
