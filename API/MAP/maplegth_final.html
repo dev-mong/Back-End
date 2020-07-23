@@ -108,7 +108,6 @@
         
         //요청하는 사람의 위치를 담을 객체 
         var requestLoc = {}; //또는 var person = new Object();
-        var customOverlay= new kakao.maps.CustomOverlay({});
        
 
         //요청하는 사람의 위도 경도 값 
@@ -118,7 +117,6 @@
 
             requestLoc.longitude = coords.Ha;
             
-            customOverlay.content=message;
         }
         
            
@@ -142,8 +140,7 @@
                     content: '<div style="width:150px;text-align:center;padding:6px 0;">요청자 위치</div>'
                 });
                 
-                var message='<div style="width:150px;text-align:center;padding:6px 0;">요청자 위치</div>';
-                
+               
                 
                 //infowindow.open(map, marker);
 
@@ -177,14 +174,7 @@
                 var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
                     message = '<div style="padding:5px;">내위치</div>'; // 인포윈도우에 표시될 내용입니다
                      
-                
-                customOverlay= new kakao.maps.CustomOverlay({});
-                
-                
-                customOverlay.content=message;
-              
-                
-                
+           
                 // 마커와 인포윈도우를 표시합니다
                 displayMarker(locPosition, message);
 
@@ -204,7 +194,7 @@
 
 
         // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-        function displayMarker(locPosition, customOverlay) {
+        function displayMarker(locPosition, message) {
 
             // 마커를 생성합니다
             var marker = new kakao.maps.Marker({
@@ -212,9 +202,9 @@
                 position: locPosition
             });
             
-            console.log(customOverlay);
 
-            var iwContent = customOverlay;// 인포윈도우에 표시할 내용
+            
+            var iwContent = message;// 인포윈도우에 표시할 내용
             
             
             // 인포윈도우를 생성합니다
@@ -229,7 +219,6 @@
             // 지도 중심좌표를 접속위치로 변경합니다
             map.setCenter(locPosition);
 
-            //console.log(locPosition);
 
             return locPosition;
 
