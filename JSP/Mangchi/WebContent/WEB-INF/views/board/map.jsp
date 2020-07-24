@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	Object requestList = request.getAttribute("requestWrtingList");
+	
+	session.setAttribute("requestWritingList",requestList );
+
+ %>
+
 
 
 <!DOCTYPE html>
@@ -9,25 +16,18 @@
 <meta charset="utf-8">
 
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <title>선의 거리 계산하기</title>
 
 
-	<c:forEach begin="0" end="2" var="requestList" items="${requestWrtingList.requestWriting}" varStatus="status">
-		list1.push("${requestList.req_loc}");
-	</c:forEach> 
-	
-	
+
 <script>
 	var locationList = new Array();
 
-
 	<c:forEach var="requestList" items="${requestWrtingList.requestWriting}" varStatus="status">
 	locationList.push("${requestList.req_loc}");
-		console.log(locationList);
 	</c:forEach>
-	
 </script>
 <style>
 .dot {
@@ -94,16 +94,7 @@
 
 <body>
 	<div id="map" style="width: 100%; height: 350px;"></div>
-	<p>
-		<em>지도를 마우스로 클릭하면 선 그리기가 시작되고<br>오른쪽 마우스를 클릭하면 선 그리기가 종료됩니다
-		</em>
-	</p>
-
-	<button value="약도보기" id="btn">약도보기</button>
-
-	<!--//거리 출력 -->
 	<div id="distance"></div>
-
 	<p>
 		<em>지도를 움직여 주세요!</em>
 	</p>
@@ -114,11 +105,6 @@
 
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69c40691beee2a7bf82c96e2f85f0da8"></script>
-
-
-
-
-
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 		mapOption = {
@@ -127,215 +113,172 @@
 		// 지도의 확대 레벨
 		};
 
-		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다t
 
-		// 주소-좌표 변환 객체를 생성합니다
-		var geocoder = new kakao.maps.services.Geocoder();
+		 var geocoder = new kakao.maps.services.Geocoder();
 
-		//요청하는 사람의 위치를 담을 객체 
-		var requestLoc = {}; //또는 var person = new Object();
+			geocoder.addressSearch('서울특별시 종로구 종로 31',function(result, status) {
 
-		//요청하는 사람의 위도 경도 값 
-		function request(coords) {
+				// 정상적으로 검색이 완료됐으면 
+				if (status === kakao.maps.services.Status.OK) {
 
-			requestLoc.latitude = coords.Ga;
+					var coords = new kakao.maps.LatLng(
+							result[0].y, result[0].x);
 
-			requestLoc.longitude = coords.Ha;
+					var marker1 = new daum.maps.Marker({
+						map : map,
+						position : coords
+					});
 
-		}
+					var requestMessage = '<div style="padding:5px; background-color:white; border: 1px solid #DDD;">요청자 위치</div>';
 
-		//나의 현재 위치 값을 담을 객체 
+					var overlay1 = new daum.maps.CustomOverlay(
+							{
+								content : requestMessage,
+								map : map,
+								position : marker1
+										.getPosition()
+							});
 
-		//<<도와주는 사람 의 현재 위치 >>///
 
-		// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-		if (navigator.geolocation) {
+					var coordXY = document
+							.getElementById("result"); //검색 지도 경도위도 알아내기
 
-			// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-			navigator.geolocation.getCurrentPosition(function(position) {
+					var html = "" + result[0].address_name;
 
-				var lat = position.coords.latitude, // 위도
-				lon = position.coords.longitude; // 경도
+					html += '<input id="user_latitude" type="text" value="';
+	        					 html += result[0].y;
+	         				html += ' "> ';
+					html += '<input id="user_longitude" type="text" value="';
+	        					 html += result[0].x;
+	        					 html += ' "> <br>';
 
-				var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 
+					$("#result").append(html);
 
-				// 마커와 인포윈도우를 표시합니다
-				displayMarker(locPosition);
+									}
+								}
 
-			});
+						);
 
-		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-
-			var locPosition = new kakao.maps.LatLng(33.450701, 126.570667)
-
-			alert('잘못된 경로입니다. 다시 접근해주세요');
-
-			displayMarker(locPosition);
-		}
-
-		// 지도에 마커와 인포윈도우를 표시하는 함수입니다
-		function displayMarker(locPosition, message) {
-
-			// 마커를 생성합니다
-			var marker2 = new daum.maps.Marker({
-				map : map,
-				position : locPosition
-			});
-
-			var requestMessage = '<div style="padding:5px; background-color:white; border: 1px solid #DDD;">내위치</div>';
-
-			var overlay1 = new daum.maps.CustomOverlay({
-				content : requestMessage,
-				map : map,
-				position : marker2.getPosition()
-			});
-
-			// 지도 중심좌표를 접속위치로 변경합니다
-			map.setCenter(locPosition);
-
-			return locPosition;
-
-		}
+		 
 		
-		//$("#btn").trigger("btn");
+		
+		
+		// 주소-좌표 변환 객체를 생성합니다
+		//var geocoder = new kakao.maps.services.Geocoder();
+		
+		var list=[];
+		var listObj = {};
 		
 		for (var i = 0; i < locationList.length; i++) {
+			
+			var geocoder = new kakao.maps.services.Geocoder();
+			
+			
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch(locationList[i],function(result, status) {
 
-			   console.log('주소 확인 : '+locationList[i]);
+			// 정상적으로 검색이 완료됐으면 
+			if (status === kakao.maps.services.Status.OK) {
 
-		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch(locationList[i], function(result, status) {
+				var coords = new kakao.maps.LatLng(
+						result[0].y, result[0].x);
 
-							// 정상적으로 검색이 완료됐으면 
-							if (status === kakao.maps.services.Status.OK) {
+				var marker1 = new daum.maps.Marker({
+					map : map,
+					position : coords
+				});
 
-								var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				var requestMessage = '<div style="padding:5px; background-color:white; border: 1px solid #DDD;">요청자 위치</div>';
 
-								var marker1 = new daum.maps.Marker({
-									map : map,
-									position : coords
-								});
-
-								var requestMessage = '<div style="padding:5px; background-color:white; border: 1px solid #DDD;">요청자 위치</div>';
-
-								var overlay1 = new daum.maps.CustomOverlay({
-									content : requestMessage,
-									map : map,
-									position : marker1.getPosition()
-								});
-
-								request(coords);
-
-							}
+				var overlay1 = new daum.maps.CustomOverlay(
+						{
+							content : requestMessage,
+							map : map,
+							position : marker1
+									.getPosition()
 						});
-		//}
 
-		
-		
-		
-		
-		var drawingFlag = false; // 선이 그려지고 있는 상태를 가지고 있을 변수입니다
-		var moveLine; // 선이 그려지고 있을때 마우스 움직임에 따라 그려질 선 객체 입니다
-		var clickLine // 마우스로 클릭한 좌표로 그려질 선 객체입니다
-		var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
-		var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 
-		// 지도에 클릭 이벤트를 등록합니다
-		// 지도를 클릭하면 선 그리기가 시작됩니다 그려진 선이 있으면 지우고 다시 그립니다
-		//
-		//kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-	//document.getElementById('btn').onclick = (function(e) {
+				var coordXY = document
+						.getElementById("result"); //검색 지도 경도위도 알아내기
 
-	//	$("#my-btn").trigger("btn");
-		$("#btn").trigger("btn");
-			// 마우스로 클릭한 위치입니다 
+				var html = "" + result[0].address_name;
 
-			//요청하는 사람 위도 , 경도 값 
-			var longitude = requestLoc.longitude;
-			var latitude = requestLoc.latitude;
+				html += '<input class="latitude" type="text" value="';
+        					 html += result[0].y;
+         				html += ' "> ';
+				html += '<input class="longitude" type="text" value="';
+        					 html += result[0].x;
+        					 html += ' "> <br>';
 
-			var clickPosition = new kakao.maps.LatLng(longitude, latitude);
+				$("#result").append(html);
+				
+					 var lat = $('.latitude').val();
+					var lon = $('.longitude').val(); 
+				
+				list.push(lat);
+				list.push(lon);
+			
+				
+								}
+							}
 
-			//내위치 (수행자의 현재 위치 값 )
-			var myPosition = map.getCenter();
+					);
+			
 
-			// 지도 클릭이벤트가 발생했는데 선을 그리고있는 상태가 아니면
-			if (!drawingFlag) {
+			
+			
+			
+			
+			
+			window.onload = function() {
+				
+				
+				
+				
+				var user_lat=$('#user_latitude').val();
+				var user_lon=$('#user_longitude').val();
+				var locPosition = new kakao.maps.LatLng(user_lat, user_lon);
+				map.setCenter(locPosition);
+				
+				 
+				 
+				 
+				for(var  i=0 ; i < list.length ; i++){
+					
 
-				// 상태를 true로, 선이 그리고있는 상태로 변경합니다
-				drawingFlag = true;
-
-				// 지도 위에 선이 표시되고 있다면 지도에서 제거합니다
-				deleteClickLine();
-
-				// 지도 위에 커스텀오버레이가 표시되고 있다면 지도에서 제거합니다
-				deleteDistnce();
-
-				// 지도 위에 선을 그리기 위해 클릭한 지점과 해당 지점의 거리정보가 표시되고 있다면 지도에서 제거합니다
-				deleteCircleDot();
-
-				// 클릭한 위치를 기준으로 선을 생성하고 지도위에 표시합니다
-				clickLine = new kakao.maps.Polyline({
-					map : map, // 선을 표시할 지도입니다 
-
-					path : [ clickPosition, myPosition ], // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
-
-					strokeWeight : 3, // 선의 두께입니다 
-					strokeColor : '#db4040', // 선의 색깔입니다
-					strokeOpacity : 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-					strokeStyle : 'solid' // 선의 스타일입니다
-				});
-
-				// 선이 그려지고 있을 때 마우스 움직임에 따라 선이 그려질 위치를 표시할 선을 생성합니다
-				moveLine = new kakao.maps.Polyline({
-					strokeWeight : 3, // 선의 두께입니다 
-					strokeColor : '#db4040', // 선의 색깔입니다
-					strokeOpacity : 0.5, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-					strokeStyle : 'solid' // 선의 스타일입니다    
-				});
-
-				// 클릭한 지점에 대한 정보를 지도에 표시합니다
-				displayCircleDot(clickPosition, 0);
-
-			} else { // 선이 그려지고 있는 상태이면
-
-				// 그려지고 있는 선의 좌표 배열을 얻어옵니다
-				var path = clickLine.getPath();
-
-				// 좌표 배열에 클릭한 위치를 추가합니다
-				path.push(clickPosition);
-
-				// 다시 선에 좌표 배열을 설정하여 클릭 위치까지 선을 그리도록 설정합니다
-				clickLine.setPath(path);
-
-				var distance = Math.round(clickLine.getLength());
-
-				displayCircleDot(clickPosition, distance);
-			}
-
-			//<<<<<지도 그려지고 난후 값 //
-
-			// 지도 오른쪽 클릭 이벤트가 발생했는데 선을 그리고있는 상태이면
-			if (drawingFlag) {
-
-				// 마우스무브로 그려진 선은 지도에서 제거합니다
-				moveLine.setMap(null);
-				moveLine = null;
-
-				// 마우스 클릭으로 그린 선의 좌표 배열을 얻어옵니다
-				var path = clickLine.getPath();
-
-				// 선을 구성하는 좌표의 개수가 2개 이상이면
-				if (path.length > 1) {
-
-					// 마지막 클릭 지점에 대한 거리 정보 커스텀 오버레이를 지웁니다
-					if (dots[dots.length - 1].distance) {
-						dots[dots.length - 1].distance.setMap(null);
-						dots[dots.length - 1].distance = null;
+					if( i%2==0 ){
+							
+						console.log('인덱스 짝수일때 '+list[i]);
+						console.log(list[i+1]);
+						var lat = list[i]; 
+						var lon = list[i+1]; 
+						
 					}
+						var linePath = [
+							new daum.maps.LatLng(lat, lon),
+							new daum.maps.LatLng(user_lat, user_lon) 
+						];
 
-					var distance = Math.round(clickLine.getLength()), // 선의 총 거리를 계산합니다
-					content = getTimeHTML(distance); // 커스텀오버레이에 추가될 내용입니다
+					// 지도에 표시할 선을 생성합니다
+					var polyline = new daum.maps.Polyline({
+						path : linePath, // 선을 구성하는 좌표배열 입니다
+						strokeWeight : 5, // 선의 두께 입니다
+						strokeColor : '#FFAE00', // 선의 색깔입니다
+						strokeOpacity : 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+						strokeStyle : 'solid' // 선의 스타일입니다
+					});
+
+					polyline.setMap(map);
+
+					var distance = polyline.getLength();
+
+					console.log(distance);
+
+					var distance = Math.round(distance) // 선의 총 거리를 계산합니다
+					// 커스텀오버레이에 추가될 내용입니다
+
 
 					//<<<<<<★★★★★★★★거리 출력 
 
@@ -343,175 +286,75 @@
 					html += '<div>요청자와 나와의 거리 : ' + distance + 'm</div>';
 					document.getElementById('distance').innerHTML = html;
 
-					// 그려진 선의 거리정보를 지도에 표시합니다
-					showDistance(content, path[path.length - 1]);
-					getTimeHTML(distance);
-
-				} else {
-
-					// 선을 구성하는 좌표의 개수가 1개 이하이면 
-					// 지도에 표시되고 있는 선과 정보들을 지도에서 제거합니다.
-					deleteClickLine();
-					deleteCircleDot();
-					deleteDistnce();
-
+					
+					
+				var distanceList=[];
+						
+					distanceList.push(distance);
+					
+					console.log(distanceList);
+					
+					localStorage.setItem("distance1", JSON.stringify(distanceList));
+						 
+						
+						
+					}
+					
 				}
+				
 
-				// 상태를 false로, 그리지 않고 있는 상태로 변경합니다
-				drawingFlag = false;
-			}
+				//두 좌표 값 계산하기 
 
-		 //});
-	
-		}
-	
-	
+				//// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+				/* var linePath = [
+						new daum.maps.LatLng(lat, lon),
+						new daum.maps.LatLng(user_lat, user_lon) 
+					];
 
-		// 클릭으로 그려진 선을 지도에서 제거하는 함수입니다
-		function deleteClickLine() {
-			if (clickLine) {
-				clickLine.setMap(null);
-				clickLine = null;
-			}
-		}
-
-		// 마우스 드래그로 그려지고 있는 선의 총거리 정보를 표시하거
-		// 마우스 오른쪽 클릭으로 선 그리가 종료됐을 때 선의 정보를 표시하는 커스텀 오버레이를 생성하고 지도에 표시하는 함수입니다
-		function showDistance(content, position) {
-
-			if (distanceOverlay) { // 커스텀오버레이가 생성된 상태이면
-
-				// 커스텀 오버레이의 위치와 표시할 내용을 설정합니다
-				distanceOverlay.setPosition(position);
-				distanceOverlay.setContent(content);
-
-			} else { // 커스텀 오버레이가 생성되지 않은 상태이면
-
-				// 커스텀 오버레이를 생성하고 지도에 표시합니다
-				distanceOverlay = new kakao.maps.CustomOverlay({
-					map : map, // 커스텀오버레이를 표시할 지도입니다
-					content : content, // 커스텀오버레이에 표시할 내용입니다
-					position : position, // 커스텀오버레이를 표시할 위치입니다.
-					xAnchor : 0,
-					yAnchor : 0,
-					zIndex : 3
+				// 지도에 표시할 선을 생성합니다
+				var polyline = new daum.maps.Polyline({
+					path : linePath, // 선을 구성하는 좌표배열 입니다
+					strokeWeight : 5, // 선의 두께 입니다
+					strokeColor : '#FFAE00', // 선의 색깔입니다
+					strokeOpacity : 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+					strokeStyle : 'solid' // 선의 스타일입니다
 				});
-			}
-		}
 
-		// 그려지고 있는 선의 총거리 정보와 
-		// 선 그리가 종료됐을 때 선의 정보를 표시하는 커스텀 오버레이를 삭제하는 함수입니다
-		function deleteDistnce() {
-			if (distanceOverlay) {
-				distanceOverlay.setMap(null);
-				distanceOverlay = null;
-			}
-		}
+				polyline.setMap(map);
 
-		// 선이 그려지고 있는 상태일 때 지도를 클릭하면 호출하여 
-		// 클릭 지점에 대한 정보 (동그라미와 클릭 지점까지의 총거리)를 표출하는 함수입니다
-		function displayCircleDot(position, distance) {
+				var distance = polyline.getLength();
 
-			// 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
-			var circleOverlay = new kakao.maps.CustomOverlay({
-				content : '<span class="dot"></span>',
-				position : position,
-				zIndex : 1
-			});
+				console.log(distance);
 
-			// 지도에 표시합니다
-			circleOverlay.setMap(map);
-
-			if (distance > 0) {
-				// 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
-				var distanceOverlay = new kakao.maps.CustomOverlay(
-						{
-							content : '<div class="dotOverlay">거리 <span class="number">'
-									+ distance + '</span>m</div>',
-							position : position,
-							yAnchor : 1,
-							zIndex : 2
-						});
-
-				// 지도에 표시합니다
-				distanceOverlay.setMap(map);
-			}
-
-			// 배열에 추가합니다
-			dots.push({
-				circle : circleOverlay,
-				distance : distanceOverlay
-			});
-
-		}
-
-		// 클릭 지점에 대한 정보 (동그라미와 클릭 지점까지의 총거리)를 지도에서 모두 제거하는 함수입니다
-		function deleteCircleDot() {
-			var i;
-
-			for (i = 0; i < dots.length; i++) {
-				if (dots[i].circle) {
-					dots[i].circle.setMap(null);
-				}
-
-				if (dots[i].distance) {
-					dots[i].distance.setMap(null);
-				}
-			}
-
-			dots = [];
-		}
-
-		// 마우스 우클릭 하여 선 그리기가 종료됐을 때 호출하여 
-		// 그려진 선의 총거리 정보와 거리에 대한 도보, 자전거 시간을 계산하여
-		// HTML Content를 만들어 리턴하는 함수입니다
-		function getTimeHTML(distance) {
-
-			// 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
-			var walkkTime = distance / 67 | 0;
-			var walkHour = '', walkMin = '';
-
-			// 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
-			if (walkkTime > 60) {
-				walkHour = '<span class="number">' + Math.floor(walkkTime / 60)
-						+ '</span>시간 '
-			}
-			walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
-
-			// 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
-			var bycicleTime = distance / 227 | 0;
-			var bycicleHour = '', bycicleMin = '';
-
-			// 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
-			if (bycicleTime > 60) {
-				bycicleHour = '<span class="number">'
-						+ Math.floor(bycicleTime / 60) + '</span>시간 '
-			}
-			bycicleMin = '<span class="number">' + bycicleTime % 60
-					+ '</span>분'
-
-			// 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
-			var content = '<ul class="dotOverlay distanceInfo">';
-			content += '    <li>';
-			content += '        <span class="label">총거리</span><span class="number">'
-					+ distance + '</span>m';
-			content += '    </li>';
-			content += '    <li>';
-			content += '        <span class="label">도보</span>' + walkHour
-					+ walkMin;
-			content += '    </li>';
-			content += '    <li>';
-			content += '        <span class="label">자전거</span>' + bycicleHour
-					+ bycicleMin;
-			content += '    </li>';
-			content += '</ul>'
-
-			return content;
-		}
-	</script>
+				var distance = Math.round(distance) // 선의 총 거리를 계산합니다
+				// 커스텀오버레이에 추가될 내용입니다
 
 
+				//<<<<<<★★★★★★★★거리 출력 
+
+				var html = '';
+				html += '<div>요청자와 나와의 거리 : ' + distance + 'm</div>';
+				document.getElementById('distance').innerHTML = html;
+
+				
+				
+				var distanceList=[];
+					
+				distanceList.push(distance);
+				
+				console.log(distanceList);
+				
+				localStorage.setItem("distance1", JSON.stringify(distanceList)); */
+
+		/* 	}
+			 
+		} */
+
+		// location.href = "<c:url value="/board/boardingView.do" /> ";
+		</script>
 
 
 </body>
+
+
 </html>
