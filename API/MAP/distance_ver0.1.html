@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>여러개 마커 표시하기</title>
+</head>
+
+<body>
+    <div id="map" style="width:100%;height:350px;"></div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69c40691beee2a7bf82c96e2f85f0da8&libraries=services"></script>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=69c40691beee2a7bf82c96e2f85f0da8"></script>
+ <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <div id="distance"></div>
+    <div id="result"></div>
+
+
+    <script>
+        
+        
+        
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+
+
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+
+        
+      
+
+   // 주소로 좌표를 검색합니다
+       geocoder.addressSearch('서울 종로구 종로 84',
+                              
+                               
+                               function(result, status) {
+
+            // 정상적으로 검색이 완료됐으면 
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = 
+                    new kakao.maps.LatLng(result[0].y, result[0].x);
+
+
+                var marker1 = new daum.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                var requestMessage = '<div style="padding:5px; background-color:white; border: 1px solid #DDD;">요청자 위치</div>';
+
+                var overlay1 = new daum.maps.CustomOverlay({
+                    content: requestMessage,
+                    map: map,
+                    position: marker1.getPosition()
+                });
+                
+                
+                var coordXY = document.getElementById("result"); //검색 지도 경도위도 알아내기
+            
+                var html = " ";
+
+                html += '<input id="latitude" type="text" value="';
+                html += result[0].y;
+                html += ' "> ';
+                html += '<input id="longitude" type="text" value="';
+                html += result[0].x;
+                html += ' "> ';
+                    
+                    
+                coordXY.innerHTML = html;
+
+                
+            }
+        }
+                                         
+                                         );
+        
+        
+//
+//        //사용자 위치
+        if (navigator.geolocation) {
+
+            // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+            navigator.geolocation.getCurrentPosition(function(position) {
+
+                var lat = position.coords.latitude, // 위도
+                    lon = position.coords.longitude; // 경도
+
+                var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 
+          
+
+                // 마커와 인포윈도우를 표시합니다
+                displayMarker(locPosition);
+
+
+            });
+
+        } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+
+            var locPosition = new kakao.maps.LatLng(33.450701, 126.570667)
+
+            alert('잘못된 경로입니다. 다시 접근해주세요');
+
+            displayMarker(locPosition);
+        }
+        
+
+
+
+        // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+        function displayMarker(locPosition, message) {
+
+            // 마커를 생성합니다
+            var marker2 = new daum.maps.Marker({
+                map: map,
+                position: locPosition
+            });
+
+
+            var requestMessage = '<div style="padding:5px; background-color:white; border: 1px solid #DDD;">내위치</div>';
+
+            var overlay1 = new daum.maps.CustomOverlay({
+                content: requestMessage,
+                map: map,
+                position: marker2.getPosition()
+            });
+
+
+
+            // 지도 중심좌표를 접속위치로 변경합니다
+            map.setCenter(locPosition);
+
+
+            return locPosition;
+
+        }
+
+            
+    </script>
+</body>
+
+
+
+<script>
+    
+    
+
+          window.onload = function () {
+        var lat = $('#latitude').val();
+        var lon = $('#longitude').val();
+        console.log(lat);
+        
+        
+        //두 좌표 값 계산하기 
+
+ //// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+     var linePath = [
+    new daum.maps.LatLng(lat, lon),
+    new daum.maps.LatLng(37.5700955308238, 126.98305463081557 )
+];
+
+// 지도에 표시할 선을 생성합니다
+var polyline = new daum.maps.Polyline({
+    path: linePath, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 5, // 선의 두께 입니다
+    strokeColor: '#FFAE00', // 선의 색깔입니다
+    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid' // 선의 스타일입니다
+});
+
+        polyline.setMap(map);
+
+        var distance = polyline.getLength();
+        
+        
+        console.log(distance);
+        
+
+        var distance = Math.round(distance) // 선의 총 거리를 계산합니다
+        // 커스텀오버레이에 추가될 내용입니다
+
+//        map.setCenter(new daum.maps.LatLng(33.452344169439975, 126.56878163224233));
+
+        //<<<<<<★★★★★★★★거리 출력 
+
+        var html = '';
+        html += '<div>요청자와 나와의 거리 : ' + distance + 'm</div>';
+        document.getElementById('distance').innerHTML = html;
+
+        //console.log(distance);
+          
+}
+    
+    </script>
+
+
+
+
+
+
+</html>
