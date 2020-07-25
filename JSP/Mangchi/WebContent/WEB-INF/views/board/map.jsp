@@ -144,12 +144,12 @@
 					var coordXY = document
 							.getElementById("result"); //검색 지도 경도위도 알아내기
 
-					var html = "" + result[0].address_name;
+					var html = "";
 
-					html += '<input id="user_latitude" type="text" value="';
+					html += '<input  id="user_latitude" type="hidden" value="';
 	        					 html += result[0].y;
 	         				html += ' "> ';
-					html += '<input id="user_longitude" type="text" value="';
+					html += '<input id="user_longitude" type="hidden" value="';
 	        					 html += result[0].x;
 	        					 html += ' "> <br>';
 
@@ -164,19 +164,24 @@
 		
 		
 		
-		// 주소-좌표 변환 객체를 생성합니다
-		//var geocoder = new kakao.maps.services.Geocoder();
 		
 		var list=[];
-		var listObj = {};
 		
-		for (var i = 0; i < locationList.length; i++) {
-			
+		// 주소-좌표 변환 객체를 생성합니다
 			var geocoder = new kakao.maps.services.Geocoder();
+		
+		
 			
+		for (var num = 0; num < locationList.length; num++) {
 			
+		//	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다t
 			// 주소로 좌표를 검색합니다
-			geocoder.addressSearch(locationList[i],function(result, status) {
+		//	var geocoder = new kakao.maps.services.Geocoder();
+			
+		
+		
+		
+			geocoder.addressSearch(locationList[num],function(result, status,num) {
 
 			// 정상적으로 검색이 완료됐으면 
 			if (status === kakao.maps.services.Status.OK) {
@@ -204,7 +209,8 @@
 						.getElementById("result"); //검색 지도 경도위도 알아내기
 
 				var html = "" + result[0].address_name;
-
+				
+						
 				html += '<input class="latitude" type="text" value="';
         					 html += result[0].y;
          				html += ' "> ';
@@ -214,143 +220,136 @@
 
 				$("#result").append(html);
 				
-					 var lat = $('.latitude').val();
-					var lon = $('.longitude').val(); 
+				 var lat = $('.latitude').val();
+				var lon = $('.longitude').val(); 
 				
 				list.push(lat);
-				list.push(lon);
+				list.push(lon); 
 			
-				
-								}
-							}
-
-					);
-			
-
-			
-			
-			
-			
-			
-			window.onload = function() {
-				
 				
 				
 				
 				var user_lat=$('#user_latitude').val();
 				var user_lon=$('#user_longitude').val();
 				var locPosition = new kakao.maps.LatLng(user_lat, user_lon);
+				
+				
+				
 				map.setCenter(locPosition);
 				
-				 
-				 
-				 
+				
+				console.log(list);
+				
 				for(var  i=0 ; i < list.length ; i++){
-					
-
+					var linePath = [];
 					if( i%2==0 ){
-							
+						
 						console.log('인덱스 짝수일때 '+list[i]);
-						console.log(list[i+1]);
+						console.log(list[i+1]);	
+						
+						var lat = list[i]; 
+						var lon = list[i+1]; 
+					}
+				}
+				
+				
+				
+								}
+							}
+
+					);
+			
+			
+			
+			
+			window.onload = function() {
+				
+				 var lat = $('.latitude').val();
+				var lon = $('.longitude').val(); 
+					
+				list.push(lat);
+				list.push(lon);
+				
+				var user_lat=$('#user_latitude').val();
+				var user_lon=$('#user_longitude').val();
+				var locPosition = new kakao.maps.LatLng(user_lat, user_lon);
+				map.setCenter(locPosition);
+				
+				
+				console.log(list);
+				
+				for(var  i=0 ; i < list.length ; i++){
+					var linePath = [];
+					if( i%2==0 ){
+						
+						console.log('인덱스 짝수일때 '+list[i]);
+						console.log(list[i+1]);	
+						
 						var lat = list[i]; 
 						var lon = list[i+1]; 
 						
+						linePath.push(  new daum.maps.LatLng(lat, lon),  new daum.maps.LatLng(user_lat, user_lon));
+						
+						/* var linePath = [
+						    new daum.maps.LatLng(lat, lon),
+						    new daum.maps.LatLng(user_lat, user_lon)
+						]; */
+						
+						
 					}
-						var linePath = [
-							new daum.maps.LatLng(lat, lon),
-							new daum.maps.LatLng(user_lat, user_lon) 
-						];
+					
+					//console.log(linePath);
+					
+					
 
+					/* var linePath = [
+					    new daum.maps.LatLng(lat, lon),
+					    new daum.maps.LatLng(user_lat, user_lon)
+					];
+ */
 					// 지도에 표시할 선을 생성합니다
 					var polyline = new daum.maps.Polyline({
-						path : linePath, // 선을 구성하는 좌표배열 입니다
-						strokeWeight : 5, // 선의 두께 입니다
-						strokeColor : '#FFAE00', // 선의 색깔입니다
-						strokeOpacity : 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-						strokeStyle : 'solid' // 선의 스타일입니다
+					    path: linePath, // 선을 구성하는 좌표배열 입니다
+					    strokeWeight: 5, // 선의 두께 입니다
+					    strokeColor: '#FFAE00', // 선의 색깔입니다
+					    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+					    strokeStyle: 'solid' // 선의 스타일입니다
 					});
 
-					polyline.setMap(map);
+					        polyline.setMap(map);
 
-					var distance = polyline.getLength();
-
-					console.log(distance);
-
-					var distance = Math.round(distance) // 선의 총 거리를 계산합니다
-					// 커스텀오버레이에 추가될 내용입니다
+					        var distance = polyline.getLength();
 
 
-					//<<<<<<★★★★★★★★거리 출력 
+					      //  console.log(distance);
 
-					var html = '';
-					html += '<div>요청자와 나와의 거리 : ' + distance + 'm</div>';
-					document.getElementById('distance').innerHTML = html;
 
+					        var distance = Math.round(distance) // 선의 총 거리를 계산합니다
+					        // 커스텀오버레이에 추가될 내용입니다
+
+//					        map.setCenter(new daum.maps.LatLng(33.452344169439975, 126.56878163224233));
+
+					        //<<<<<<★★★★★★★★거리 출력 
+
+					        var html = '';
+					        html += '<div>요청자와 나와의 거리 : ' + distance + 'm</div>';
+					        document.getElementById('distance').innerHTML = html;
 					
 					
-				var distanceList=[];
-						
-					distanceList.push(distance);
-					
-					console.log(distanceList);
-					
-					localStorage.setItem("distance1", JSON.stringify(distanceList));
-						 
 						
 						
 					}
 					
 				}
 				
-
-				//두 좌표 값 계산하기 
-
-				//// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
-				/* var linePath = [
-						new daum.maps.LatLng(lat, lon),
-						new daum.maps.LatLng(user_lat, user_lon) 
-					];
-
-				// 지도에 표시할 선을 생성합니다
-				var polyline = new daum.maps.Polyline({
-					path : linePath, // 선을 구성하는 좌표배열 입니다
-					strokeWeight : 5, // 선의 두께 입니다
-					strokeColor : '#FFAE00', // 선의 색깔입니다
-					strokeOpacity : 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-					strokeStyle : 'solid' // 선의 스타일입니다
-				});
-
-				polyline.setMap(map);
-
-				var distance = polyline.getLength();
-
-				console.log(distance);
-
-				var distance = Math.round(distance) // 선의 총 거리를 계산합니다
-				// 커스텀오버레이에 추가될 내용입니다
-
-
-				//<<<<<<★★★★★★★★거리 출력 
-
-				var html = '';
-				html += '<div>요청자와 나와의 거리 : ' + distance + 'm</div>';
-				document.getElementById('distance').innerHTML = html;
-
-				
-				
-				var distanceList=[];
-					
-				distanceList.push(distance);
-				
-				console.log(distanceList);
-				
-				localStorage.setItem("distance1", JSON.stringify(distanceList)); */
-
-		/* 	}
-			 
-		} */
+		} 
+		
 
 		// location.href = "<c:url value="/board/boardingView.do" /> ";
+		
+		
+		
+		
 		</script>
 
 
