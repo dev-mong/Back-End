@@ -177,12 +177,11 @@
 		//	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다t
 			// 주소로 좌표를 검색합니다
 		//	var geocoder = new kakao.maps.services.Geocoder();
-			
 		
-		
-		
-			geocoder.addressSearch(locationList[num],function(result, status,num) {
-
+			geocoder.addressSearch(locationList[num],function(result, status) {
+				var index=0;
+				
+				
 			// 정상적으로 검색이 완료됐으면 
 			if (status === kakao.maps.services.Status.OK) {
 
@@ -204,9 +203,10 @@
 									.getPosition()
 						});
 
-
+				
+				
 				var coordXY = document
-						.getElementById("result"); //검색 지도 경도위도 알아내기
+						.getElementById("result"); 
 
 				var html = "" + result[0].address_name;
 				
@@ -219,130 +219,90 @@
         					 html += ' "> <br>';
 
 				$("#result").append(html);
+					
 				
-				 var lat = $('.latitude').val();
-				var lon = $('.longitude').val(); 
-				
-				list.push(lat);
-				list.push(lon); 
+				}
+							
+			}); //search 함수
 			
+			
+		}//for문  
+		
+		
+		window.onload = function() {
+
+		 	var lat = $('.latitude').val();
+			var lon = $('.longitude').val(); 
+				
+			
+			list.push(lat);
+			list.push(lon); 
 				
 				
+			
+			var user_lat=$('#user_latitude').val();
+			var user_lon=$('#user_longitude').val();
+			var locPosition = new kakao.maps.LatLng(user_lat, user_lon);
+			
+			
+			map.setCenter(locPosition);
+			
+			
+			var linePath = [];
+			var distanceList=[];
+			
+			
+			for(var  i=0 ; i < list.length ; i++){
 				
-				var user_lat=$('#user_latitude').val();
-				var user_lon=$('#user_longitude').val();
-				var locPosition = new kakao.maps.LatLng(user_lat, user_lon);
-				
-				
-				
-				map.setCenter(locPosition);
-				
-				
-				console.log(list);
-				
-				for(var  i=0 ; i < list.length ; i++){
-					var linePath = [];
-					if( i%2==0 ){
-						
-						console.log('인덱스 짝수일때 '+list[i]);
-						console.log(list[i+1]);	
-						
-						var lat = list[i]; 
-						var lon = list[i+1]; 
-					}
+				if( i%2==0 ){
+					
+					console.log('인덱스 짝수일때 ');
+					var lat = list[i]; 
+					var lon = list[i+1]; 
+					
+					linePath.push(new daum.maps.LatLng(lat, lon));
+					linePath.push(new daum.maps.LatLng(user_lat, user_lon));
+					
+					
 				}
 				
-				
-				
-								}
-							}
-
-					);
+			
+			}
 			
 			
 			
+			//linePath에 인덱스 짝수 : 로그인한 사용자의 위치
+			//				홀수 : 게시물의 등록 위치 
 			
-			window.onload = function() {
 				
-				 var lat = $('.latitude').val();
-				var lon = $('.longitude').val(); 
-					
-				list.push(lat);
-				list.push(lon);
-				
-				var user_lat=$('#user_latitude').val();
-				var user_lon=$('#user_longitude').val();
-				var locPosition = new kakao.maps.LatLng(user_lat, user_lon);
-				map.setCenter(locPosition);
-				
-				
-				console.log(list);
-				
-				for(var  i=0 ; i < list.length ; i++){
-					var linePath = [];
-					if( i%2==0 ){
-						
-						console.log('인덱스 짝수일때 '+list[i]);
-						console.log(list[i+1]);	
-						
-						var lat = list[i]; 
-						var lon = list[i+1]; 
-						
-						linePath.push(  new daum.maps.LatLng(lat, lon),  new daum.maps.LatLng(user_lat, user_lon));
-						
-						/* var linePath = [
-						    new daum.maps.LatLng(lat, lon),
-						    new daum.maps.LatLng(user_lat, user_lon)
-						]; */
-						
-						
-					}
-					
-					//console.log(linePath);
-					
-					
-
-					/* var linePath = [
-					    new daum.maps.LatLng(lat, lon),
-					    new daum.maps.LatLng(user_lat, user_lon)
-					];
- */
 					// 지도에 표시할 선을 생성합니다
-					var polyline = new daum.maps.Polyline({
-					    path: linePath, // 선을 구성하는 좌표배열 입니다
-					    strokeWeight: 5, // 선의 두께 입니다
-					    strokeColor: '#FFAE00', // 선의 색깔입니다
-					    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-					    strokeStyle: 'solid' // 선의 스타일입니다
-					});
+			var polyline = new daum.maps.Polyline({
+			    path: linePath, // 선을 구성하는 좌표배열 입니다
+			    strokeWeight: 5, // 선의 두께 입니다
+			    strokeColor: '#FFAE00', // 선의 색깔입니다
+			    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+			    strokeStyle: 'solid' // 선의 스타일입니다
+			});
 
-					        polyline.setMap(map);
+			        polyline.setMap(map);
 
-					        var distance = polyline.getLength();
+			        var distance = polyline.getLength();
 
-
-					      //  console.log(distance);
-
-
-					        var distance = Math.round(distance) // 선의 총 거리를 계산합니다
-					        // 커스텀오버레이에 추가될 내용입니다
-
-//					        map.setCenter(new daum.maps.LatLng(33.452344169439975, 126.56878163224233));
-
-					        //<<<<<<★★★★★★★★거리 출력 
-
-					        var html = '';
-					        html += '<div>요청자와 나와의 거리 : ' + distance + 'm</div>';
-					        document.getElementById('distance').innerHTML = html;
-					
-					
-						
-						
-					}
-					
-				}
-				
-		} 
+			        
+			        
+			      //console.log( i+' 거리 계산 :' +distance);
+			      distanceList.push(distance);
+							        
+			//	}  //if - 거리 리스트 인덱스 짝수값 
+			        
+			        
+			//}      
+			
+		}//window load
+		
+		
+		
+		
 		
 
 		// location.href = "<c:url value="/board/boardingView.do" /> ";
