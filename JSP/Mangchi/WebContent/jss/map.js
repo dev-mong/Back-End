@@ -65,10 +65,11 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		
 		};
 		
-		var geocoder = new daum.maps.services.Geocoder();
 
+		var geocoder = new kakao.maps.services.Geocoder();
 		var requestfunc = function(){
 			locationList.forEach(function(addr, index) {
+				
 					geocoder.addressSearch(addr, function(result, status) {
 									if (status === daum.maps.services.Status.OK) {
 										var coords = new daum.maps.LatLng(
@@ -111,6 +112,8 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 									idx:index
 								};
 								
+								
+								
 								listt.push(boardLoc);
 								
 								parse(index);
@@ -129,7 +132,6 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 			
  	// window.onload = function() {
  	var parse = function(index){
- 		console.log(index);
  		
  		/*
 		 * for (var i = 0; i < locationList.length; i++) {
@@ -158,20 +160,22 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	
 			var linePath = [];
 			
+			console.log(index);
+			
 			for (var i = 0; i < listt.length; i++) {
-	
-				if(listt[i].idx == index){
-	
-					
-						linePath.push(new daum.maps.LatLng(listt[i].lat, listt[i].lon) );
-						linePath.push(new daum.maps.LatLng(userlist[0], userlist[1]));
-						
-				}
-			
 				
-			}
+				
+				if(index == listt.legnth){
+					
+				}
+				}	
+					
 			
-			
+						/*linePath.push(new daum.maps.LatLng(listt[i].lat, listt[i].lon) );
+						linePath.push(new daum.maps.LatLng(userlist[0], userlist[1]));*/
+						
+				
+		
 	
 			/*for (var i = 0; i < list.length; i++) {
 	
@@ -218,18 +222,17 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 		var cal = function(linePath){
 
-			console.log(linePath);
 			
-			for (var j = 0; j < linePath.length; j++) {
+		/*	for (var j = 0; j < linePath.length; j++) {
 				
 				
-				if (j % 2 == 0) {
+				if (j % 2 == 0) {*/
 				
-					calDistance.push(linePath[j]);
-					calDistance.push(linePath[j+1]);
+					/*calDistance.push(linePath[j]);
+					calDistance.push(linePath[j+1]);*/
 					
 				var polyline = new kakao.maps.Polyline({
-					path : calDistance, // 선을 구성하는 좌표배열 입니다
+					path : linePath, // 선을 구성하는 좌표배열 입니다
 					strokeWeight : 5, // 선의 두께 입니다
 					strokeColor : '#FFAE00', // 선의 색깔입니다
 					strokeOpacity : 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에
@@ -242,19 +245,23 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 				var distance = polyline.getLength();
 				var distance = Math.round(distance);
 	
-				//console.log('거리 계산 :' +distance);
+				console.log('거리 계산 :' +distance);
 				
-				calDistance.pop(linePath[j]);
-				calDistance.pop(linePath[j+1]);
+				/*calDistance.pop(linePath[j]);
+				calDistance.pop(linePath[j+1]);*/
 				
 				distanceList.push(distance);
 	
-				}
+			/*	}
 	
-			}
+			}*/
+				
+				result();
 		};
 		
-	//	var result = function(){
+		
+		
+		var result = function(){
 			// 열 제목 추가
 			var tbd = $('#tbd');
 		    var tbd_tr = $('#tbd>tr');
@@ -269,7 +276,10 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 		        
 		        $('.listdistance'+[i]).text(distanceList[i]);
 		   }
-		//};
+		    
+		    
+		    
+		};
 
 			/*
 			 * for (var j = 0; j < linePath.length; j++) {
