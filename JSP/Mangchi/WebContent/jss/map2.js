@@ -89,7 +89,7 @@
 							listt.push(boardLoc);
 							
 						   if (total === counter) { // 모든 비동기 콜백이 수행되었다면
-						        doSomething(); // 다음 로직으로 넘어갑니다.
+						        cal(); // 다음 로직으로 넘어갑니다.
 					        }
 								
 				});
@@ -101,7 +101,7 @@
 		
 		var distanceList = [];
 		
-		 function doSomething(index) {
+		 function cal() {
 			
    
 				var linePath = [];
@@ -158,7 +158,7 @@
 					calDistance.pop(linePath[j+1]);
 					
 					
-					if(distance <=  1000){
+					if(distance <=  10000){
 						distanceList.push(distance);
 					}	
 		    	}
@@ -167,22 +167,31 @@
 		  
 		  
 		  var pageList = [];
+
 		  
 		  for(var a=0;a<allList.length;a++){
 			 
 			  allList[a].distance=distanceList[a];
-			  
-			  
-			 //사용자가 정한 거리 만큼 리스트 출력
-			 if(allList[a].distance != null){
-				 
-				 pageList.push(allList[a]);
-				 
-			 }
-			 
-		  
 		  }
 		  
+		  
+		  var sortingField = "distance";
+		  
+		  allList.sort(function(a, b) { // 오름차순
+			  return a[sortingField] - b[sortingField];
+		  });
+		  
+		  
+		  
+		  //사용자가 정한 거리 만큼 리스트 출력
+		  for(var a=0;a<allList.length;a++){
+			
+			  if(allList[a].distance != null){
+			  
+				  pageList.push(allList[a]);
+			  }
+			  
+		  }
 		  
 		  //전체 리스트 값  : pageList 
 		  //전체 리스트의 수 : pageList.length 
@@ -191,17 +200,36 @@
 		  // 시작 점 : startRow
 		  // 종료 : endRow
 		  
+		  
 		  const  requestCountPage = 4; //한 페이지 당 표현 할 리스트 수 
 		  var requestTotalCount = pageList.length; // 전체 리스트 개수 
 		  
 		  
-		  
 		  //파라미터 값으로 가져와야함 
-		  var currentPageNumber=2; //현재 페이지 
 		  
 		  
+		 
+		  var currentPageNumber=1; //현재 페이지 
 		  
-		  
+		  	var link = document.location.href; 
+
+			console.log(link);
+				
+			var link = link.split('?');
+			
+			
+			if(link.length != 1){
+				
+			  	var para = document.location.href.split("?"); 
+				var para = para[1].split("="); 
+			
+				console.log(para);
+				
+				currentPageNumber = para[1];
+				console.log(currentPageNumber);
+			}
+			
+			
 		  
 		  //전체 페이지 수 구하기 (전체 리스트 개수 / 한페지 당 출력 할 값 )
 		  var pageTotalCount = requestTotalCount / requestCountPage;
@@ -212,10 +240,20 @@
 		  }
 		  
 		  var startRow = (currentPageNumber - 1) * requestCountPage;
-		  var endRow = startRow + (requestCountPage-1);
 		  
-		  console.log(startRow);
-		  console.log(endRow);
+		  var endRow =  startRow + requestCountPage ;
+		  
+		  if(endRow > requestTotalCount){
+			  endRow = requestTotalCount;
+		  }
+		  
+		  
+		  
+		  function getContextPath(){
+			    var offset=location.href.indexOf(location.host)+location.host.length;
+			    var ctxPath=location.href.substring(offset,location.href.indexOf('/',offset+1));
+			    return ctxPath;
+			}
 		  
 		  if(requestTotalCount > 0){
 			  
@@ -224,16 +262,28 @@
 			 for(var k=startRow;k<endRow;k++){
 				 
 				 
-			  	var tr = $('<tr></tr>');
+				 var tr = $('<tr></tr>');
 				 
 				 $('#tab').append(tr);
 				 
+				 
 				 tr.attr('id',''+pageList[k].req_idx+'');
 				 
+				 var contextPath = "${pageContext.contextPath}";
 				 
 				 var html = '';
 				 html +='<td>'+pageList[k].req_writer+'</td>';
-				 html +='<td>'+pageList[k].req_title+'</td>';
+				 html +='<td>';	
+				 
+				 
+				 html += '<a href=" ';
+				 html += getContextPath()+'/board/detailRequestInfo.do?req_idx='+pageList[k].req_idx+' " ';
+				 html += '>';
+				 
+				 html += pageList[k].req_title;
+				 html+= '</a>';
+				
+				 html +='</td>';
 				 html +='<td>'+pageList[k].req_price+'</td>';
 				 html +='<td>'+pageList[k].req_regdate+'</td>';
 				 html +='<td>'+pageList[k].req_term+'</td>';
@@ -246,37 +296,38 @@
 			  
 				 tr.append(html);
 				 
-			 } 
-				 
-				
-			for(var m=1;m<pageTotalCount;m++){		 
-				 var page = $('<a></a>');
-				 page.attr('id', m);
-				 page.attr('href', '');
-				 
-				 $('.paging').append(page);
-				 
-				 var html ="";
-				 html += m;
-				 
-				 page.append(html);
-				 
-			}	
-				  
-				 
-				 
-				 
-			  
-		   
+			 }
+			 
+			 history.replaceState({}, null, location.pathname);
+			 
+			 
+			 
 		  }
-
 		  else{
 			  alert('등록된 게시물이 없습니다.');
 		  }
+
 		  
+		  if(pageTotalCount > 0){
+			  
+				for(var m=1;m<=pageTotalCount;m++){		 
+		
+					var link = document.location.href; 
+					
+					var html = "";
+					html +='<a id="listlink" ';
+					html +='href="'+link+'?page='+m+'" ';
+					html +=">";
+					html +='['+m+']';
+					html +='</a>';
+					
+					$('.paging').append(html);
+					
+					
+				}	
+		  }
 		  
-		  
-		 
+
 		 }
 		 
 		

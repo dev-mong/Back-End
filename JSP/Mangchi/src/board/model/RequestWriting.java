@@ -99,11 +99,11 @@ public class RequestWriting {
 	}
 
 	public String getReq_loc() {
-		return req_loc;
+		return req_loc.trim();
 	}
 
 	public void setReq_loc(String req_loc) {
-		this.req_loc = req_loc;
+		this.req_loc = req_loc.trim();
 	}
 
 	public String getReq_text() {
@@ -156,10 +156,14 @@ public class RequestWriting {
 
 	@Override
 	public String toString() {
-		
-		
-		return req_loc;
+		return "RequestWriting [req_idx=" + req_idx + ", req_writer=" + req_writer + ", req_title=" + req_title
+				+ ", req_helper=" + req_helper + ", req_price=" + req_price + ", req_regdate=" + req_regdate
+				+ ", req_term=" + req_term + ", req_loc=" + req_loc + ", req_text=" + req_text + ", req_latitude="
+				+ req_latitude + ", req_longitud=" + req_longitud + ", req_readcnt=" + req_readcnt + ", req_status="
+				+ req_status + ", req_img=" + req_img + "]";
 	}
+
+	
 	
 	
 	

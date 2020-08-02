@@ -29,6 +29,20 @@
 <link href='<c:url value="/css/carousel.css"/>' rel="stylesheet">
 <link href='<c:url value="/css/map.css"/>' rel="stylesheet">
 
+<style>
+	th, td{
+		padding:10px;
+		font-size: 25px;
+	}
+	.box{
+		margin-top: 150px;
+		margin-left: 5%;
+	}
+	
+	#listlink{
+		font-size: 25px;
+	}
+</style>
 
 
 </head>
@@ -43,19 +57,15 @@
 
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 	
-	
-	
-	
-	<br>
-	<br>
-	<br>
-	<h1>게시판 들어갈 자리</h1>
-	
+
 
 	<c:if test="${empty requestWritingList}">
 		<h1>게시물 없음</h1>
 	</c:if>
-
+	
+	
+	
+	<div class=" box">
 	<table border="1" id="tab">
 	
 		 <tr>
@@ -72,66 +82,12 @@
 			<th>나와 사용자 사이의 거리</th>
 		</tr> 
 
-		<%-- <c:forEach var="requestList"
-			items="${requestWritingList.requestWriting}">
-			 <tbody id='tbd'>
-			
-			<tr >
-				<td>${requestList.req_writer}</td>
-				<td><a
-					href=" <c:url value="/board/detailrequestinfo.do?req_idx=${requestList.req_idx} "/>">${requestList.req_title}</a></td>
-				<td>${requestList.req_price}</td>
-				<td>${requestList.req_regdate}</td>
-				<td>${requestList.req_term}</td>
-				<td>${requestList.req_loc}</td>
-				<td>${requestList.req_text}</td>
-				<td>${requestList.req_readcnt}</td>
-				<td>${requestList.req_status}</td>
-				<td>${requestList.req_img}</td>
-				
-				
-			</tr>
-			
-			</tbody>
-		</c:forEach> --%>
-		
-		
-		<%-- <c:forEach var="requestList"
-			items="${requestWritingList}">
-			 <tbody id='tbd'>
-			
-			<tr >
-				<td>${requestList.req_writer}</td>
-				<td><a
-					href=" <c:url value="/board/detailrequestinfo.do?req_idx=${requestList.req_idx} "/>">${requestList.req_title}</a></td>
-				<td>${requestList.req_price}</td>
-				<td>${requestList.req_regdate}</td>
-				<td>${requestList.req_term}</td>
-				<td>${requestList.req_loc}</td>
-				<td>${requestList.req_text}</td>
-				<td>${requestList.req_readcnt}</td>
-				<td>${requestList.req_status}</td>
-				<td>${requestList.req_img}</td>
-				
-				
-			</tr>
-			
-			</tbody>
-		</c:forEach>  --%>
-
 	</table>
-
  
 	<div class="paging">
-		<%-- <c:if test="${requestWritingList.pageTotalCount > 0}">
-			<c:forEach begin="1" end="${requestWritingList.pageTotalCount}"
-				var="num">
-				<a href=" <c:url value="/board/boarding.do?page=${num}" />"class="${requuestWrtingList.currentPageNumber eq num ? 'currentPage' : ''}"
-					>[${num}]</a>
-			</c:forEach>
-		</c:if> --%>
+		
 	</div>
-
+</div>
 	
 	<!-- <p id="result" style="display: none;"></p> -->
 	<p id="result"></p>

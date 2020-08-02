@@ -27,7 +27,7 @@ public class RequestBoardListServiceImpl implements Service {
 		Connection conn = null;
 		int requestTotalCount = 0;
 		List<RequestWriting> requestWriting = null;
-		RequestWritingList requuestWrtingList=null;
+		RequestWritingList requestWritingList=null;
 
 		try {
 
@@ -37,6 +37,7 @@ public class RequestBoardListServiceImpl implements Service {
 			// ---- 페이지 당 출력 할 회원 정보 리스트 구하기 ---- //전체 회원정보 개수
 			requestTotalCount = dao.selectTotalCount(conn);
 
+			
 			// -----현재 페이지 계산 : 게시물 시작 행, 페지당 표현할 정보 개수 계산 -----
 			int startRow = 0; // 게시물 시작 행
 			String page = request.getParameter("page");
@@ -52,20 +53,20 @@ public class RequestBoardListServiceImpl implements Service {
 				// 시작행 계산 식  
 				startRow = (currentPageNumber - 1) * MEMBER_COUNT_PAGE;
 				// 출력 할 리스트
-				requestWriting = dao.selectMemberList(conn, startRow, MEMBER_COUNT_PAGE);
+				requestWriting = dao.selectRequestList(conn, startRow, MEMBER_COUNT_PAGE);
 
 			} else { // 회원 정보가 없을 때
 				requestWriting = Collections.emptyList(); // -----------------------★
 			}
 			
 			
-			  requuestWrtingList = new RequestWritingList(requestTotalCount, 
+			requestWritingList = new RequestWritingList(requestTotalCount, 
 					  MEMBER_COUNT_PAGE, 
 					  currentPageNumber, requestWriting, startRow);
 			  
 			  
 			  
-			  request.setAttribute("requestWrtingList", requuestWrtingList);
+			  request.setAttribute("requestWritingList", requestWritingList);
 			 
 
 		} catch (SQLException e) {
@@ -80,8 +81,9 @@ public class RequestBoardListServiceImpl implements Service {
 			}
 		}
 
+		//return "/WEB-INF/views/board/map.jsp";
 		//return "/WEB-INF/views/board/requestList.jsp";
-		return "/WEB-INF/views/board/map.jsp";
+		return "/WEB-INF/views/board/requestList2.jsp";
 	}
 
 }
