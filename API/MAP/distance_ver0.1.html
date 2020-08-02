@@ -26,7 +26,7 @@
                 level: 3 // 지도의 확대 레벨
             };
 
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다t
 
 
 
@@ -64,6 +64,8 @@
                     position: marker1.getPosition()
                 });
                 
+                
+                console.log(result[0].x);
                 
                 var coordXY = document.getElementById("result"); //검색 지도 경도위도 알아내기
             
@@ -153,8 +155,6 @@
 
 <script>
     
-    
-
           window.onload = function () {
         var lat = $('#latitude').val();
         var lon = $('#longitude').val();
@@ -169,6 +169,8 @@
     new daum.maps.LatLng(37.5700955308238, 126.98305463081557 )
 ];
 
+              console.log(linePath);
+              
 // 지도에 표시할 선을 생성합니다
 var polyline = new daum.maps.Polyline({
     path: linePath, // 선을 구성하는 좌표배열 입니다
