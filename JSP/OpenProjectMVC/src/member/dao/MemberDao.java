@@ -245,7 +245,7 @@ public class MemberDao {
 		ResultSet rs = null;
 		Member member=null;
 		
-		String sql = "SELECT * FROM project.member WHERE UID=?";
+		String sql = "SELECT uid FROM project.member WHERE UID=?";
 		try {
 
 			pstmt = conn.prepareStatement(sql);
@@ -255,9 +255,7 @@ public class MemberDao {
 
 			while (rs.next()) {
 				member = new Member();
-				member.setIdx(rs.getInt("idx"));
 				member.setUid(rs.getString("uid"));
-				member.setUid(rs.getString("upw"));
 			}
 
 		} finally {
@@ -319,6 +317,46 @@ public class MemberDao {
 		}
 		
 		return memberList;
+	}
+
+	public Member selectByIdPw(Connection conn, String uid, String upw) throws SQLException {
+		
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		Member member=null;
+		
+		try {
+			String sql = "select * from project.member where uid=? and upw=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, uid);
+			pstmt.setString(2, upw);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				member = new Member();
+				member.setIdx(rs.getInt("idx"));
+				member.setUid(rs.getString("uid"));
+				member.setUpw(rs.getString("upw"));
+				member.setUname(rs.getString("uname"));
+				member.setUphoto(rs.getString("uphoto"));
+				member.setRegdate(rs.getDate("regdate"));
+			}
+			
+		} finally {
+			if(pstmt != null) {
+				pstmt.close();
+			} 
+			if( rs !=null) {
+				rs.close();
+			}
+		}
+		
+		System.out.println(member);
+		
+		return member;
+		
+		
 	}
 	
 	

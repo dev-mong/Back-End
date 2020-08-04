@@ -21,22 +21,19 @@ public class LoginImpl implements Service {
 
 		
 		Connection conn=null;
-		Member members=null;
+		Member member=null;
 		
 		try {
 			conn=ConnectionProvider.getConnection();
 			
 			String uid=request.getParameter("uid");
+			String upw=request.getParameter("upw");
 			
-			System.out.println(uid);
+			dao = MemberDao.getInstance();
+			member=dao.selectByIdPw(conn,uid,upw);		
 			
-			members=dao.selectByUid(conn, uid);			
 			
-			System.out.println(members.getIdx());
-			
-			if(members.getUid().equals(uid)) {
-				request.setAttribute("member", members);
-			}
+			request.setAttribute("member", member);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -50,7 +47,6 @@ public class LoginImpl implements Service {
 				}
 			}
 		}
-		
 		return "/WEB-INF/views/member/login.jsp";
 	}
 
