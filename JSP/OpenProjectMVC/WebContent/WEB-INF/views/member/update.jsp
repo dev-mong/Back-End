@@ -18,8 +18,6 @@ img {
 
 </head>
 <body>
-	<h1>수정페이지</h1>
-	${updateMember }
 	<%@ include file="/WEB-INF/views/include/header.jsp"%>
 
 	<div>

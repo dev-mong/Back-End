@@ -44,9 +44,8 @@ td {
 
 		</form>
 
-		<div id="count"></div>
+		<div id="count">비밀번호 입력 : <input type="text" id="checkPw"></div>
 
-		<input type="button" value="회원 정보 삭제하기" id="check">
 
 	</div>
 
@@ -55,10 +54,6 @@ td {
 </body>
 </html>
 <script>
-		$('#check').click(function() {
-				var html = '비밀번호 입력 : <input type="text" id="checkPw">';
-				$('#count').append(html);
-
 				var upw = $('#upw').val();
 				var i = 1;
 
@@ -83,5 +78,4 @@ td {
 						}
 					}
 				});
-			});
-</script>
+ </script>
